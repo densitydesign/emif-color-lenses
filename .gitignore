@@ -1,0 +1,14 @@
+node_modules
+
+# Output
+bundle.js
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
+!.env.example
+!.env.test

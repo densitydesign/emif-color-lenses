@@ -1,0 +1,29 @@
+{
+  "name": "online-harassment-spectrum-lenses",
+  "version": "0.0.1",
+  "main": "main.js",
+  "scripts": {
+    "build": "browserify  main.js -o bundle.js",
+    "start": "beefy main.js:bundle.js"
+  },
+  "browserify": {
+    "transform": [
+      "glslify"
+    ]
+  },
+  "author": "s-ol bekic",
+  "license": "MIT",
+  "description": "",
+  "dependencies": {
+    "a-big-triangle": "^1.0.3",
+    "gl-context": "^0.1.1",
+    "gl-shader": "^4.3.1",
+    "gl-texture2d": "^2.1.0",
+    "glsl-square-frame": "^1.0.1",
+    "glslify": "^7.1.1"
+  },
+  "devDependencies": {
+    "beefy": "^2.1.8",
+    "browserify": "^17.0.0"
+  }
+}
