@@ -17,4 +17,9 @@ canvas {
   inset: 20px 0 auto;
   width: fit-content;
   margin: auto;
+  align-items: center;
+}
+
+.buttons > div {
+  display: flex;
 }

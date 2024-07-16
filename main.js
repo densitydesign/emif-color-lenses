@@ -10,6 +10,8 @@ const buttonImage = document.getElementById('button-image');
 const buttonC = document.getElementById('button-c');
 const buttonM = document.getElementById('button-m');
 const buttonY = document.getElementById('button-y');
+const inputOklab = document.getElementById('input-oklab');
+const inputCMYK = document.getElementById('input-cmyk');
 const color = document.getElementById('color');
 let gl, program;
 let video, stream, texture;
@@ -17,8 +19,15 @@ let video, stream, texture;
 const render = () => {
   gl.clear(gl.COLOR_BUFFER_BIT);
   program.bind();
+  if (texture) {
+    program.uniforms.screenRes = [canvas.width, canvas.height];
+    program.uniforms.textureRes = [texture.width, texture.height];
+  }
 
-  if (video && texture) texture.setPixels(video);
+  if (video && texture) {
+    texture.setPixels(video);
+  }
+
   gltri(gl);
 };
 
@@ -27,8 +36,6 @@ const resize = () => {
   canvas.height = window.innerHeight;
 
   gl.viewport(0, 0, canvas.width, canvas.height);
-  program.bind();
-  program.uniforms.screenRes = [canvas.width, canvas.height];
 };
 
 buttonVideo.onclick = async () => {
@@ -43,14 +50,14 @@ buttonVideo.onclick = async () => {
   });
 
   video = document.createElement('video');
-  const loaded = new Promise(res => { video.onloadeddata = res; });
+  const loaded = new Promise(res => { video.onplaying = res; });
   video.srcObject = stream;
   video.play();
   await loaded;
 
   texture = gltex(gl, video);
-  program.bind();
-  program.uniforms.textureRes = [video.videoWidth, video.videoHeight];
+  texture.width = video.videoWidth;
+  texture.height = video.videoHeight;
 };
 buttonImage.onclick = async () => {
   if (video) { video.pause(); video = null; }
@@ -61,8 +68,6 @@ buttonImage.onclick = async () => {
   img.src = 'test.png';
   await loaded;
   texture = gltex(gl, img);
-  program.bind();
-  program.uniforms.textureRes = [img.naturalWidth, img.naturalHeight];
 };
 color.oninput = () => {
   const bigint = parseInt(color.value.slice(1), 16);
@@ -77,9 +82,17 @@ buttonC.onclick = () => { color.value = '#00adef'; color.onchange(); };
 buttonM.onclick = () => { color.value = '#f140a9'; color.onchange(); };
 buttonY.onclick = () => { color.value = '#fff200'; color.onchange(); };
 
+inputCMYK.onchange = () => {
+  program = glshd(gl, glslify('./shaders/quad.vert'), glslify('./shaders/cmyk.frag'));
+  color.onchange();
+};
+inputOklab.onchange = () => {
+  program = glshd(gl, glslify('./shaders/quad.vert'), glslify('./shaders/oklab.frag'));
+  color.onchange();
+};
+
 gl = glctx(canvas, { depth: false, stencil: false, antialias: true }, render);
 gl.clearColor(0, 0, 0, 1);
-program = glshd(gl, glslify('./shaders/quad.vert'), glslify('./shaders/cmyk.frag'));
 
 window.onresize = resize;
 resize();
@@ -93,5 +106,6 @@ window.onkeydown = (e) => {
   }
 };
 
+inputCMYK.onchange();
 color.onchange();
-buttonImage.onclick()
+buttonImage.onclick();
