@@ -79,7 +79,7 @@ buttonY.onclick = () => { color.value = '#fff200'; color.onchange(); };
 
 gl = glctx(canvas, { depth: false, stencil: false, antialias: true }, render);
 gl.clearColor(0, 0, 0, 1);
-program = glshd(gl, glslify('./shaders/quad.vert'), glslify('./shaders/oklab.frag'));
+program = glshd(gl, glslify('./shaders/quad.vert'), glslify('./shaders/cmyk.frag'));
 
 window.onresize = resize;
 resize();
