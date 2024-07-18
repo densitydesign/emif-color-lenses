@@ -13,8 +13,8 @@ const buttonY = document.getElementById('button-y');
 const inputOklab = document.getElementById('input-oklab');
 const inputCMYK = document.getElementById('input-cmyk');
 const color = document.getElementById('color');
-let gl, program;
-let video, stream, texture;
+let gl, program, texture;
+let updateInput, cleanupInput;
 
 const render = () => {
   gl.clear(gl.COLOR_BUFFER_BIT);
@@ -24,9 +24,7 @@ const render = () => {
     program.uniforms.textureRes = [texture.width, texture.height];
   }
 
-  if (video && texture) {
-    texture.setPixels(video);
-  }
+  if (updateInput) updateInput();
 
   gltri(gl);
 };
@@ -39,17 +37,19 @@ const resize = () => {
 };
 
 buttonVideo.onclick = async () => {
-  if (video) { video.pause(); video = null; }
-  if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+  if (cleanupInput) {
+    cleanupInput();
+    cleanupInput = null;
+  }
 
-  stream = await navigator.mediaDevices.getUserMedia({
+  const stream = await navigator.mediaDevices.getUserMedia({
     audio: false,
     video: {
       facingMode: 'environment'
     }
   });
 
-  video = document.createElement('video');
+  const video = document.createElement('video');
   const loaded = new Promise(res => { video.onplaying = res; });
   video.srcObject = stream;
   video.play();
@@ -58,16 +58,58 @@ buttonVideo.onclick = async () => {
   texture = gltex(gl, video);
   texture.width = video.videoWidth;
   texture.height = video.videoHeight;
+
+  updateInput = () => texture.setPixels(video);
+  cleanupInput = () => {
+    video.pause();
+    stream.getTracks().forEach(t => t.stop());
+    updateInput = null;
+  };
 };
 buttonImage.onclick = async () => {
-  if (video) { video.pause(); video = null; }
-  if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+  if (cleanupInput) {
+    cleanupInput();
+    cleanupInput = null;
+  }
 
   const img = document.createElement('img');
-  const loaded = new Promise(res => { img.onload = res; });
+  const loaded = new Promise((res, rej) => { img.onload = res; img.onerror = rej; });
   img.src = 'test.png';
   await loaded;
   texture = gltex(gl, img);
+};
+document.body.ondrop = async (e) => {
+  if (cleanupInput) {
+    cleanupInput();
+    cleanupInput = null;
+  }
+
+  e.preventDefault();
+  const items = Array.from(e.dataTransfer.items);
+  const image = items.find(item => item.type.startsWith('image/'));
+  const urls = items.find(item => item.type === 'text/uri-list');
+
+  items[0].getAsString(console.info)
+  let url;
+  if (image) {
+    url = URL.createObjectURL(image.getAsFile());
+    cleanupInput = () => URL.revokeObjectURL(url);
+  } else if (urls) {
+    url = await new Promise(res => urls.getAsString(res));
+  } else {
+    return;
+  }
+
+  const img = document.createElement('img');
+  const loaded = new Promise((res, rej) => { img.onload = res; img.onerror = rej; });
+  img.src = url;
+  window.IMG = img;
+  await loaded;
+  texture = gltex(gl, img);
+};
+document.body.ondragover = (e) => {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = "copy";
 };
 color.oninput = () => {
   const bigint = parseInt(color.value.slice(1), 16);
@@ -91,8 +133,34 @@ inputOklab.onchange = () => {
   color.onchange();
 };
 
-gl = glctx(canvas, { depth: false, stencil: false, antialias: true }, render);
+gl = glctx(canvas, { depth: false, stencil: false, antialias: true, preserveDrawingBuffer: true }, render);
 gl.clearColor(0, 0, 0, 1);
+
+canvas.onclick = (e) => {
+  const x = Math.floor(e.clientX - canvas.offsetLeft);
+  const y = canvas.height - Math.floor(e.clientY - canvas.offsetTop);
+
+  const pixels = new Uint8Array(4);
+  pixels[0] = 1;
+  pixels[1] = 2;
+  pixels[2] = 3;
+  pixels[3] = 4;
+  gl.readPixels(
+      x, y,
+      1, 1,
+      gl.RGBA,
+      gl.UNSIGNED_BYTE,
+      pixels
+  );
+
+  const [r, g, b] = pixels;
+  const num = r << 16 | g << 8 | b;
+  let hex = num.toString(16);
+  hex = '#' + '0'.repeat(6 - hex.length) + hex;
+  console.log(hex);
+  color.value = hex;
+  color.onchange();
+};
 
 window.onresize = resize;
 resize();
