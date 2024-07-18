@@ -55,8 +55,10 @@ void main() {
 
   vec4 lens = rgb2cmyk(lensColor);
 
+  col.a = smoothstep(0.5, 0.6, col.a); // * smoothstep(0.8, 0.7, length(col.rgb));
+
   float aligned = dot(col.rgb, lens.rgb);
-  col.rgb *= pow(aligned, 3.0);
+  col.rgb *= smoothstep(0.85, 0.95, aligned);
 
   gl_FragColor = vec4(cmyk2rgb(col), 1);
   gl_FragColor.rgb = mix(gl_FragColor.rgb, texcol, globalMix);

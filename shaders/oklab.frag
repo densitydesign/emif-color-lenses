@@ -25,9 +25,7 @@ void main() {
   vec3 col = rgb2oklab(texcol);
 
   // if close to black or white keep that
-  // float colorness = smoothstep(0.9, 0.8, col.x) * smoothstep(0.0, 0.1, col.x);
-  float colorness = smoothstep(0.7, 0.75, length(col));
-  // col = mix(col, vec3(0.5), colorness);
+  float colorness = smoothstep(0.6, 0.65, length(col));
 
   vec3 lens = rgb2oklab(lensColor);
 
