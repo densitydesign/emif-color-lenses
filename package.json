@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "main": "main.js",
   "scripts": {
-    "build": "browserify  main.js -o bundle.js",
-    "start": "beefy main.js:bundle.js"
+    "build": "browserify main.js -o bundle.js",
+    "start": "beefy main.js:bundle.js --live"
   },
   "browserify": {
     "transform": [

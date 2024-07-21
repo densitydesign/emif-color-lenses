@@ -7,11 +7,10 @@ const gltri = require("a-big-triangle");
 const canvas = document.getElementById('canvas');
 const buttonVideo = document.getElementById('button-video');
 const buttonImage = document.getElementById('button-image');
+const buttonAll = document.getElementById('button-all');
 const buttonC = document.getElementById('button-c');
 const buttonM = document.getElementById('button-m');
 const buttonY = document.getElementById('button-y');
-const inputOklab = document.getElementById('input-oklab');
-const inputCMYK = document.getElementById('input-cmyk');
 const color = document.getElementById('color');
 let gl, program, texture;
 let updateInput, cleanupInput;
@@ -45,7 +44,9 @@ buttonVideo.onclick = async () => {
   const stream = await navigator.mediaDevices.getUserMedia({
     audio: false,
     video: {
-      facingMode: 'environment'
+      facingMode: 'environment',
+      width: { ideal: 4096 },
+      height: { ideal: 2160 },
     }
   });
 
@@ -120,22 +121,16 @@ color.oninput = () => {
   program.uniforms.lensColor = [r / 0xff, g / 0xff, b / 0xff];
 };
 color.onchange = color.oninput;
-buttonC.onclick = () => { color.value = '#00adef'; color.onchange(); };
-buttonM.onclick = () => { color.value = '#f140a9'; color.onchange(); };
-buttonY.onclick = () => { color.value = '#fff200'; color.onchange(); };
-
-inputCMYK.onchange = () => {
-  program = glshd(gl, glslify('./shaders/quad.vert'), glslify('./shaders/cmyk.frag'));
-  color.onchange();
-};
-inputOklab.onchange = () => {
-  program = glshd(gl, glslify('./shaders/quad.vert'), glslify('./shaders/oklab.frag'));
-  color.onchange();
-};
+buttonAll.onclick = () => { color.value = '#ffffff'; color.onchange(); };
+buttonC.onclick = () => { color.value = '#ff0000'; color.onchange(); };
+buttonM.onclick = () => { color.value = '#00ff00'; color.onchange(); };
+buttonY.onclick = () => { color.value = '#0000ff'; color.onchange(); };
 
 gl = glctx(canvas, { depth: false, stencil: false, antialias: true, preserveDrawingBuffer: true }, render);
 gl.clearColor(0, 0, 0, 1);
+program = glshd(gl, glslify('./shaders/quad.vert'), glslify('./shaders/cmyk.frag'));
 
+const colors = [];
 canvas.onclick = (e) => {
   const x = Math.floor(e.clientX - canvas.offsetLeft);
   const y = canvas.height - Math.floor(e.clientY - canvas.offsetTop);
@@ -157,9 +152,31 @@ canvas.onclick = (e) => {
   const num = r << 16 | g << 8 | b;
   let hex = num.toString(16);
   hex = '#' + '0'.repeat(6 - hex.length) + hex;
-  console.log(hex);
-  color.value = hex;
-  color.onchange();
+  console.log(hex, Array.from(pixels).map(n => (n/255).toFixed(2)).join(' '));
+
+  if (e.shiftKey) {
+    color.value = hex;
+    color.onchange();
+    colors.push([r / 255, g / 255, b / 255]);
+  }
+};
+
+window.tally = () => {
+  const avg = colors
+    .reduce((a, b) => a.map((ac, i) => ac + b[i]), [0, 0, 0])
+    .map(c => c / colors.length);
+  const delta = [
+    Math.max(...colors.map(a => a[0])) -
+    Math.min(...colors.map(a => a[0])),
+    Math.max(...colors.map(a => a[1])) -
+    Math.min(...colors.map(a => a[1])),
+    Math.max(...colors.map(a => a[2])) -
+    Math.min(...colors.map(a => a[2])),
+  ];
+
+  console.log(avg.map((a, i) => `${a.toFixed(2)}±${(delta[i]/2).toFixed(2)}`).join(', '));
+
+  colors.length = 0;
 };
 
 window.onresize = resize;
@@ -174,6 +191,5 @@ window.onkeydown = (e) => {
   }
 };
 
-inputCMYK.onchange();
 color.onchange();
 buttonImage.onclick();
