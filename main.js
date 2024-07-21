@@ -19,6 +19,7 @@ const hint = document.getElementById('hint');
 let gl, program, texture;
 let updateInput, cleanupInput;
 let onSample;
+let mix = 0;
 
 let colorCorrection = localStorage.density_lens_corr
   ? JSON.parse(localStorage.density_lens_corr)
@@ -55,7 +56,7 @@ const render = () => {
   program.uniforms.colorCorrection = colorCorrection.flat(2);
   program.uniforms.stepRange = [+step.value - 0.1, +step.value + 0.1];
 
-  if (updateInput) updateInput();
+  if (updateInput && !onSample) updateInput();
 
   gltri(gl);
 };
@@ -194,7 +195,6 @@ canvas.onclick = (e) => {
 window.onresize = resize;
 resize();
 
-let mix = 0;
 window.onkeydown = (e) => {
   if (e.key === ' ') {
     mix = 1 - mix;
