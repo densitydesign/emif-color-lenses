@@ -3,6 +3,7 @@ const glslify = require("glslify");
 const glshd = require("gl-shader");
 const gltex = require("gl-texture2d");
 const gltri = require("a-big-triangle");
+const calibrate = require("./calibrate.js");
 
 const canvas = document.getElementById('canvas');
 const buttonVideo = document.getElementById('button-video');
@@ -11,9 +12,37 @@ const buttonAll = document.getElementById('button-all');
 const buttonC = document.getElementById('button-c');
 const buttonM = document.getElementById('button-m');
 const buttonY = document.getElementById('button-y');
+const buttonCalibrate = document.getElementById('calibrate');
 const color = document.getElementById('color');
+const hint = document.getElementById('hint');
 let gl, program, texture;
 let updateInput, cleanupInput;
+let onSample;
+
+let colorCorrection = localStorage.density_lens_corr
+  ? JSON.parse(localStorage.density_lens_corr)
+  : ([
+      [ -1,  0,  0, 0 ],
+      [  0, -1,  0, 0 ],
+      [  0,  0, -1, 0 ],
+      [  1,  1,  1, 1 ],
+    ]);
+
+buttonCalibrate.onclick = () => {
+  let hintText;
+  [hintText, onSample] = calibrate((mat) => {
+    mix = 0;
+    program.bind();
+    program.uniforms.globalMix = mix;
+    colorCorrection = mat;
+    onSample = null;
+  });
+  hint.innerText = hintText;
+  mix = 1;
+  program.bind();
+  program.uniforms.globalMix = mix;
+};
+
 
 const render = () => {
   gl.clear(gl.COLOR_BUFFER_BIT);
@@ -21,6 +50,7 @@ const render = () => {
   if (texture) {
     program.uniforms.screenRes = [canvas.width, canvas.height];
     program.uniforms.textureRes = [texture.width, texture.height];
+    program.uniforms.colorCorrection = colorCorrection.flat(2);
   }
 
   if (updateInput) updateInput();
@@ -130,7 +160,6 @@ gl = glctx(canvas, { depth: false, stencil: false, antialias: true, preserveDraw
 gl.clearColor(0, 0, 0, 1);
 program = glshd(gl, glslify('./shaders/quad.vert'), glslify('./shaders/cmyk.frag'));
 
-const colors = [];
 canvas.onclick = (e) => {
   const x = Math.floor(e.clientX - canvas.offsetLeft);
   const y = canvas.height - Math.floor(e.clientY - canvas.offsetTop);
@@ -154,29 +183,10 @@ canvas.onclick = (e) => {
   hex = '#' + '0'.repeat(6 - hex.length) + hex;
   console.log(hex, Array.from(pixels).map(n => (n/255).toFixed(2)).join(' '));
 
-  if (e.shiftKey) {
-    color.value = hex;
-    color.onchange();
-    colors.push([r / 255, g / 255, b / 255]);
+  if (onSample) {
+    const color = [r / 255, g / 255, b / 255];
+    hint.innerText = onSample(color);
   }
-};
-
-window.tally = () => {
-  const avg = colors
-    .reduce((a, b) => a.map((ac, i) => ac + b[i]), [0, 0, 0])
-    .map(c => c / colors.length);
-  const delta = [
-    Math.max(...colors.map(a => a[0])) -
-    Math.min(...colors.map(a => a[0])),
-    Math.max(...colors.map(a => a[1])) -
-    Math.min(...colors.map(a => a[1])),
-    Math.max(...colors.map(a => a[2])) -
-    Math.min(...colors.map(a => a[2])),
-  ];
-
-  console.log(avg.map((a, i) => `${a.toFixed(2)}±${(delta[i]/2).toFixed(2)}`).join(', '));
-
-  colors.length = 0;
 };
 
 window.onresize = resize;

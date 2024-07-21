@@ -23,3 +23,12 @@ canvas {
 .buttons > div {
   display: flex;
 }
+
+#hint {
+  position: absolute;
+  inset: 60px 0 auto;
+  text-align: center;
+  font-size: 40px;
+  color: white;
+  text-shadow: 1px 1px 4px black;
+}
