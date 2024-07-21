@@ -14,6 +14,7 @@ const buttonM = document.getElementById('button-m');
 const buttonY = document.getElementById('button-y');
 const buttonCalibrate = document.getElementById('calibrate');
 const color = document.getElementById('color');
+const step = document.getElementById('step');
 const hint = document.getElementById('hint');
 let gl, program, texture;
 let updateInput, cleanupInput;
@@ -43,15 +44,16 @@ buttonCalibrate.onclick = () => {
   program.uniforms.globalMix = mix;
 };
 
-
 const render = () => {
   gl.clear(gl.COLOR_BUFFER_BIT);
   program.bind();
   if (texture) {
     program.uniforms.screenRes = [canvas.width, canvas.height];
     program.uniforms.textureRes = [texture.width, texture.height];
-    program.uniforms.colorCorrection = colorCorrection.flat(2);
   }
+
+  program.uniforms.colorCorrection = colorCorrection.flat(2);
+  program.uniforms.stepRange = [+step.value - 0.1, +step.value + 0.1];
 
   if (updateInput) updateInput();
 

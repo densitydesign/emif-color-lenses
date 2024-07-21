@@ -8,6 +8,7 @@ uniform vec2 screenRes;
 
 uniform vec3 lensColor;
 uniform mat4 colorCorrection;
+uniform vec2 stepRange;
 
 uniform float globalMix;
 
@@ -26,7 +27,7 @@ void main() {
   vec3 col = texcol;
 
   col = (colorCorrection * vec4(col, 1.0)).rgb;
-  col = smoothstep(0.5, 0.7, col);
+  col = smoothstep(stepRange.x, stepRange.y, col);
 
   col *= lensColor;
 
