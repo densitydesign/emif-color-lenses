@@ -3,9 +3,11 @@ const glslify = require("glslify");
 const glshd = require("gl-shader");
 const gltex = require("gl-texture2d");
 const gltri = require("a-big-triangle");
+const math = require("mathjs");
 const calibrate = require("./calibrate.js");
 
 const canvas = document.getElementById('canvas');
+const overlay = document.getElementById('overlay');
 const buttonVideo = document.getElementById('button-video');
 const buttonImage = document.getElementById('button-image');
 const buttonAll = document.getElementById('button-all');
@@ -18,34 +20,23 @@ const step = document.getElementById('step');
 const hint = document.getElementById('hint');
 let gl, program, texture;
 let updateInput, cleanupInput;
-let onSample;
 let mix = 0;
 
-let colorCorrection = localStorage.density_lens_corr
-  ? JSON.parse(localStorage.density_lens_corr)
-  : ([
-      [ -1,  0,  0, 0 ],
-      [  0, -1,  0, 0 ],
-      [  0,  0, -1, 0 ],
-      [  1,  1,  1, 1 ],
-    ]);
+let colorCorrection = localStorage.density_lens_corr && JSON.parse(localStorage.density_lens_corr);
 
 buttonCalibrate.onclick = () => {
-  let hintText;
-  [hintText, onSample] = calibrate((mat) => {
-    mix = 0;
-    program.bind();
-    program.uniforms.globalMix = mix;
-    colorCorrection = mat;
-    onSample = null;
-  });
-  hint.innerText = hintText;
-  mix = 1;
-  program.bind();
-  program.uniforms.globalMix = mix;
+  if (colorCorrection) {
+    colorCorrection = null;
+    return;
+  }
+
+  colorCorrection = calibrate(gl, overlay);
+  localStorage.density_lens_corr = JSON.stringify(colorCorrection);
 };
 
 const render = () => {
+  overlay.style.visibility = colorCorrection ? 'hidden' : 'visible';
+
   gl.clear(gl.COLOR_BUFFER_BIT);
   program.bind();
   if (texture) {
@@ -53,10 +44,11 @@ const render = () => {
     program.uniforms.textureRes = [texture.width, texture.height];
   }
 
-  program.uniforms.colorCorrection = colorCorrection.flat(2);
+  program.uniforms.globalMix = colorCorrection ? 0 : 1;
+  program.uniforms.colorCorrection = colorCorrection ? colorCorrection.flat(2) : math.identity(4).toArray().flat(2);
   program.uniforms.stepRange = [+step.value - 0.1, +step.value + 0.1];
 
-  if (updateInput && !onSample) updateInput();
+  if (updateInput) updateInput();
 
   gltri(gl);
 };
@@ -123,7 +115,6 @@ document.body.ondrop = async (e) => {
   const image = items.find(item => item.type.startsWith('image/'));
   const urls = items.find(item => item.type === 'text/uri-list');
 
-  items[0].getAsString(console.info)
   let url;
   if (image) {
     url = URL.createObjectURL(image.getAsFile());
@@ -168,16 +159,12 @@ canvas.onclick = (e) => {
   const y = canvas.height - Math.floor(e.clientY - canvas.offsetTop);
 
   const pixels = new Uint8Array(4);
-  pixels[0] = 1;
-  pixels[1] = 2;
-  pixels[2] = 3;
-  pixels[3] = 4;
   gl.readPixels(
-      x, y,
-      1, 1,
-      gl.RGBA,
-      gl.UNSIGNED_BYTE,
-      pixels
+    x, y,
+    1, 1,
+    gl.RGBA,
+    gl.UNSIGNED_BYTE,
+    pixels
   );
 
   const [r, g, b] = pixels;
@@ -185,11 +172,6 @@ canvas.onclick = (e) => {
   let hex = num.toString(16);
   hex = '#' + '0'.repeat(6 - hex.length) + hex;
   console.log(hex, Array.from(pixels).map(n => (n/255).toFixed(2)).join(' '));
-
-  if (onSample) {
-    const color = [r / 255, g / 255, b / 255];
-    hint.innerText = onSample(color);
-  }
 };
 
 window.onresize = resize;

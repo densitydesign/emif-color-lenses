@@ -5,9 +5,11 @@ html, body {
   height: 100%;
 }
 
-canvas {
+canvas, #overlay {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .buttons {
@@ -18,6 +20,7 @@ canvas {
   width: fit-content;
   margin: auto;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .buttons > div {
