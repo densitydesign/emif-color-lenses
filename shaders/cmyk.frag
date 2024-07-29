@@ -7,7 +7,8 @@ uniform vec2 textureRes;
 uniform vec2 screenRes;
 
 uniform vec3 lensColor;
-uniform mat4 colorCorrection;
+uniform mat4 cameraCorrection;
+uniform mat4 screenCorrection;
 uniform vec2 stepRange;
 
 uniform float globalMix;
@@ -26,10 +27,10 @@ void main() {
   vec3 texcol = texture2D(texture, st).rgb;
   vec3 col = texcol;
 
-  col = (colorCorrection * vec4(col, 1.0)).rgb;
+  col = (cameraCorrection * vec4(col, 1.0)).rgb;
   col = smoothstep(stepRange.x, stepRange.y, col);
-
   col *= lensColor;
+  col = (screenCorrection * vec4(col, 1.0)).rgb;
 
   gl_FragColor = vec4(col.xyz, 1.0);
 

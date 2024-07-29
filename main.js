@@ -22,20 +22,39 @@ let gl, program, texture;
 let updateInput, cleanupInput;
 let mix = 0;
 
-let colorCorrection = localStorage.density_lens_corr && JSON.parse(localStorage.density_lens_corr);
+let cameraCorrection = localStorage.density_lens_corr && JSON.parse(localStorage.density_lens_corr);
+
+const screenCorrection = (() => {
+  const colors = [0x00adee, 0xed6ea7, 0xfff200];
+  let matrix = [];
+  for (const rgb of colors) {
+    const r = (rgb >> 16) & 0xff;
+    const g = (rgb >>  8) & 0xff;
+    const b = (rgb >>  0) & 0xff;
+    matrix.push([
+      r / 0xff - 1,
+      g / 0xff - 1,
+      b / 0xff - 1,
+      0,
+    ]);
+  }
+
+  matrix.push([1, 1, 1, 1]);
+  return matrix;
+})();
 
 buttonCalibrate.onclick = () => {
-  if (colorCorrection) {
-    colorCorrection = null;
+  if (cameraCorrection) {
+    cameraCorrection = null;
     return;
   }
 
-  colorCorrection = calibrate(gl, overlay);
-  localStorage.density_lens_corr = JSON.stringify(colorCorrection);
+  cameraCorrection = calibrate(gl, overlay);
+  localStorage.density_lens_corr = JSON.stringify(cameraCorrection);
 };
 
 const render = () => {
-  overlay.style.visibility = colorCorrection ? 'hidden' : 'visible';
+  overlay.style.visibility = cameraCorrection ? 'hidden' : 'visible';
 
   gl.clear(gl.COLOR_BUFFER_BIT);
   program.bind();
@@ -44,8 +63,9 @@ const render = () => {
     program.uniforms.textureRes = [texture.width, texture.height];
   }
 
-  program.uniforms.globalMix = colorCorrection ? 0 : 1;
-  program.uniforms.colorCorrection = colorCorrection ? colorCorrection.flat(2) : math.identity(4).toArray().flat(2);
+  program.uniforms.globalMix = cameraCorrection ? 0 : 1;
+  program.uniforms.cameraCorrection = (cameraCorrection || math.identity(4).toArray).flat(2);
+  program.uniforms.screenCorrection = screenCorrection.flat(2);
   program.uniforms.stepRange = [+step.value - 0.1, +step.value + 0.1];
 
   if (updateInput) updateInput();
