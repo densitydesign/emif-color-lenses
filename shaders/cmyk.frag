@@ -14,8 +14,6 @@ uniform vec2 stepRange;
 uniform float globalMix;
 
 #pragma glslify: squareFrame = require(glsl-square-frame)
-#pragma glslify: oklab2rgb = require(./oklab2rgb.glsl)
-#pragma glslify: rgb2oklab = require(./rgb2oklab.glsl)
 
 void main() {
   vec2 uv = squareFrame(screenRes);
