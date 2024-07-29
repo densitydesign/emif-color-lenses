@@ -3,95 +3,129 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/style.css">
   </head>
-    <body>
-      <canvas id="canvas"></canvas>
-      <svg id="overlay" viewBox="-75 -75 150 150" version="1.1" xmlns="http://www.w3.org/2000/svg">
-      <style>
-        .c { stroke: #00ffff; fill: #00ffff; }
-        .m { stroke: #ff00ff; fill: #ff00ff; }
-        .y { stroke: #ffff00; fill: #ffff00; }
-        circle { mix-blend-mode: multiply; }
-        circle.s { fill: none; stroke: #000; stroke-width: 1px; }
-        circle.a { fill: none; stroke: #000; stroke-width: 1px; }
-        #calibration-samples { fill: none; stroke: #000; stroke-width: 0.2px; }
+  <body>
+    <canvas id="canvas"></canvas>
 
-        circle.s, circle.f { display: none; }
-        #x { stroke: transparent; }
-      </style>
-      <use class="c" transform="rotate(-60)" href="#segment" />
-      <use class="m" transform="rotate(60)" href="#segment" />
-      <use class="y" transform="rotate(180)" href="#segment" />
+    <div class="page" id="page-live">
+      <nav>
+        <button id="button-credits">credits</button>
+        <button id="button-recalibrate">calibration</button>
+      </nav>
 
-      <g id="calibration-samples">
-        <g data-color="[1, 0, 0, 1]">
-          <use transform="rotate(-85) translate(0 -40)" href="#x" />
-          <use transform="rotate(-60) translate(0 -40)" href="#x" />
-          <use transform="rotate(-35) translate(0 -40)" href="#x" />
-        </g>
-        <g data-color="[0, 1, 0, 1]">
-          <use transform="rotate( 35) translate(0 -40)" href="#x" />
-          <use transform="rotate( 60) translate(0 -40)" href="#x" />
-          <use transform="rotate( 85) translate(0 -40)" href="#x" />
-        </g>
-        <g data-color="[0, 0, 1, 1]">
-          <use transform="rotate(155) translate(0 -40)" href="#x" />
-          <use transform="rotate(180) translate(0 -40)" href="#x" />
-          <use transform="rotate(205) translate(0 -40)" href="#x" />
-        </g>
-        <g data-color="[1, 1, 0, 1]">
-          <use transform="rotate(0) translate(0 -20)" href="#x" />
-          <use transform="rotate(0) translate(0 -30)" href="#x" />
-        </g>
-        <g data-color="[0, 1, 1, 1]">
-          <use transform="rotate(120) translate(0 -20)" href="#x" />
-          <use transform="rotate(120) translate(0 -30)" href="#x" />
-        </g>
-        <g data-color="[1, 0, 1, 1]">
-          <use transform="rotate(240) translate(0 -20)" href="#x" />
-          <use transform="rotate(240) translate(0 -30)" href="#x" />
-        </g>
-        <g data-color="[0, 0, 0, 1]">
-          <use transform="rotate(-60) translate(0 -80)" href="#x" />
-          <use transform="rotate( 60) translate(0 -80)" href="#x" />
-          <use transform="rotate(180) translate(0 -80)" href="#x" />
-        </g>
-        <g data-color="[1, 1, 1, 1]" stroke="#fff">
-          <use transform="rotate(-60) translate(0 -3)" href="#x" />
-          <use transform="rotate( 60) translate(0 -3)" href="#x" />
-          <use transform="rotate(180) translate(0 -3)" href="#x" />
-        </g>
-      </g>
-      <defs>
-        <g id="x">
-          <path d="M -2 -2 L 2 2 M 2 -2 L -2 2" />
-        </g>
-        <g id="segment">
-          <circle class="f" r="40" cx="0" cy="-30" />
-          <circle class="a" r="40" cx="0" cy="-30" />
-          <circle class="s" r="60" cx="0" cy="-5" />
-        </g>
-      </defs>
-    </svg>
-    <div class="buttons">
-      <div>
-        <button id="button-video">start camera</button>
-        <button id="button-image">start test</button>
-      </div>
-      <div>
-        <input type="color" id="color" value="#ffffff" />
-        <button id="button-all">(all)</button>
-        <button id="button-c">c</button>
-        <button id="button-m">m</button>
-        <button id="button-y">y</button>
-      </div>
-      <div>
-        <input id="step" type="range" min="0.1" max="0.9" step="0.01" value="0.5" />
-        <button id="calibrate">calibrate</button>
-      </div>
+      <nav id="buttons-bottom">
+        <button class="cyan" id="button-c">
+          <label>digital spaces</label>
+        </button>
+        <button class="magenta" id="button-m">
+          <label>motivations</label>
+        </button>
+        <button class="yellow" id="button-y">
+          <label>relationships</label>
+        </button>
+      </nav>
     </div>
-    <label id="hint"></label>
+
+    <div class="page visible" id="page-start">
+      <h1><img src="assets/title.png" alt="Stories of online harassment" /></h1>
+      <p>To explore the poster, give access to your phone camera and calibrate it.</p>
+      <button id="button-start" disabled>start</button>
+      <p>Press start when you are ready.</p>
+    </div>
+
+    <div class="page" id="page-calibration">
+      <p>
+        Align the following scheme to the coloured version on the poster and the press Calibrate.
+      </p>
+      <svg id="svg-template" viewBox="-75 -75 150 150" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <style>
+          .c { stroke: #00ffff; fill: #00ffff; }
+          .m { stroke: #ff00ff; fill: #ff00ff; }
+          .y { stroke: #ffff00; fill: #ffff00; }
+          circle { mix-blend-mode: multiply; }
+          circle.s { fill: none; stroke: #000; stroke-width: 1px; }
+          circle.a { fill: none; stroke: #000; stroke-width: 1px; }
+          #calibration-samples { fill: none; stroke: #000; stroke-width: 0.2px; }
+
+          circle.s, circle.f { display: none; }
+          #x { stroke: transparent; }
+        </style>
+        <use class="c" transform="rotate(-60)" href="#segment" />
+        <use class="m" transform="rotate(60)" href="#segment" />
+        <use class="y" transform="rotate(180)" href="#segment" />
+
+        <g id="calibration-samples">
+          <g data-color="[1, 0, 0, 1]">
+            <use transform="rotate(-85) translate(0 -40)" href="#x" />
+            <use transform="rotate(-60) translate(0 -40)" href="#x" />
+            <use transform="rotate(-35) translate(0 -40)" href="#x" />
+          </g>
+          <g data-color="[0, 1, 0, 1]">
+            <use transform="rotate( 35) translate(0 -40)" href="#x" />
+            <use transform="rotate( 60) translate(0 -40)" href="#x" />
+            <use transform="rotate( 85) translate(0 -40)" href="#x" />
+          </g>
+          <g data-color="[0, 0, 1, 1]">
+            <use transform="rotate(155) translate(0 -40)" href="#x" />
+            <use transform="rotate(180) translate(0 -40)" href="#x" />
+            <use transform="rotate(205) translate(0 -40)" href="#x" />
+          </g>
+          <g data-color="[1, 1, 0, 1]">
+            <use transform="rotate(0) translate(0 -20)" href="#x" />
+            <use transform="rotate(0) translate(0 -30)" href="#x" />
+          </g>
+          <g data-color="[0, 1, 1, 1]">
+            <use transform="rotate(120) translate(0 -20)" href="#x" />
+            <use transform="rotate(120) translate(0 -30)" href="#x" />
+          </g>
+          <g data-color="[1, 0, 1, 1]">
+            <use transform="rotate(240) translate(0 -20)" href="#x" />
+            <use transform="rotate(240) translate(0 -30)" href="#x" />
+          </g>
+          <g data-color="[0, 0, 0, 1]">
+            <use transform="rotate(-60) translate(0 -80)" href="#x" />
+            <use transform="rotate( 60) translate(0 -80)" href="#x" />
+            <use transform="rotate(180) translate(0 -80)" href="#x" />
+          </g>
+          <g data-color="[1, 1, 1, 1]" stroke="#fff">
+            <use transform="rotate(-60) translate(0 -3)" href="#x" />
+            <use transform="rotate( 60) translate(0 -3)" href="#x" />
+            <use transform="rotate(180) translate(0 -3)" href="#x" />
+          </g>
+        </g>
+        <defs>
+          <g id="x">
+            <path d="M -2 -2 L 2 2 M 2 -2 L -2 2" />
+          </g>
+          <g id="segment">
+            <circle class="f" r="40" cx="0" cy="-30" />
+            <circle class="a" r="40" cx="0" cy="-30" />
+            <circle class="s" r="60" cx="0" cy="-5" />
+          </g>
+        </defs>
+      </svg>
+      <button id="button-calibrate">Calibrate</button>
+    </div>
+
+    <div class="page" id="page-credits">
+      <h1><img src="assets/title.png" alt="Stories of online harassment" /></h1>
+
+      <div>
+        <p>Developed by</p>
+        <a href="https://s-ol.nu"><img src="assets/s-ol.png" alt="Sol Bekic" /></a>
+        <a href="https://s-ol.nu">s-ol.nu</a>
+      </div>
+
+      <div>
+        <p>Designed at</p>
+        <a href="https://densitydesign.org"><img src="assets/density.svg" alt="densitydesign logo" /></a>
+        <a href="https://densitydesign.org">densitydesign.org</a>
+      </div>
+
+      <button id="button-back">back</button>
+    </div>
+
     <script src="bundle.js"></script>
   </body>
 </html>

@@ -6,18 +6,17 @@ const gltri = require("a-big-triangle");
 const math = require("mathjs");
 const calibrate = require("./calibrate.js");
 
+const pages = Object.fromEntries(
+  ['start', 'calibration', 'live', 'credits']
+  .map(n => [n, document.getElementById(`page-${n}`)])
+);
+const buttons = Object.fromEntries(
+  ['start', 'calibrate', 'recalibrate', 'credits', 'back', 'c', 'm', 'y']
+  .map(n => [n, document.getElementById(`button-${n}`)])
+);
+
 const canvas = document.getElementById('canvas');
-const overlay = document.getElementById('overlay');
-const buttonVideo = document.getElementById('button-video');
-const buttonImage = document.getElementById('button-image');
-const buttonAll = document.getElementById('button-all');
-const buttonC = document.getElementById('button-c');
-const buttonM = document.getElementById('button-m');
-const buttonY = document.getElementById('button-y');
-const buttonCalibrate = document.getElementById('calibrate');
-const color = document.getElementById('color');
-const step = document.getElementById('step');
-const hint = document.getElementById('hint');
+const template = document.getElementById('svg-template');
 let gl, program, texture;
 let updateInput, cleanupInput;
 let mix = 0;
@@ -43,19 +42,21 @@ const screenCorrection = (() => {
   return matrix;
 })();
 
-buttonCalibrate.onclick = () => {
-  if (cameraCorrection) {
-    cameraCorrection = null;
-    return;
-  }
+let mode = 'c';
+let page = 'start';
+const lenses = {c: [1,0,0], m: [0,1,0], y: [0,0,1]};
 
-  cameraCorrection = calibrate(gl, overlay);
-  localStorage.density_lens_corr = JSON.stringify(cameraCorrection);
+const update = () => {
+  buttons.c.classList.toggle('active', mode === 'c');
+  buttons.m.classList.toggle('active', mode === 'm');
+  buttons.y.classList.toggle('active', mode === 'y');
+
+  for (const p in pages) {
+    pages[p].classList.toggle('visible', page === p);
+  }
 };
 
 const render = () => {
-  overlay.style.visibility = cameraCorrection ? 'hidden' : 'visible';
-
   gl.clear(gl.COLOR_BUFFER_BIT);
   program.bind();
   if (texture) {
@@ -64,23 +65,17 @@ const render = () => {
   }
 
   program.uniforms.globalMix = cameraCorrection ? 0 : 1;
-  program.uniforms.cameraCorrection = (cameraCorrection || math.identity(4).toArray).flat(2);
+  program.uniforms.cameraCorrection = (cameraCorrection || math.identity(4).toArray()).flat(2);
   program.uniforms.screenCorrection = screenCorrection.flat(2);
-  program.uniforms.stepRange = [+step.value - 0.1, +step.value + 0.1];
+  program.uniforms.stepRange = [0.4, 0.6];
+  program.uniforms.lensColor = lenses[mode];
 
   if (updateInput) updateInput();
 
   gltri(gl);
 };
 
-const resize = () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  gl.viewport(0, 0, canvas.width, canvas.height);
-};
-
-buttonVideo.onclick = async () => {
+buttons.start.onclick = async () => {
   if (cleanupInput) {
     cleanupInput();
     cleanupInput = null;
@@ -111,99 +106,58 @@ buttonVideo.onclick = async () => {
     stream.getTracks().forEach(t => t.stop());
     updateInput = null;
   };
-};
-buttonImage.onclick = async () => {
-  if (cleanupInput) {
-    cleanupInput();
-    cleanupInput = null;
-  }
 
-  const img = document.createElement('img');
-  const loaded = new Promise((res, rej) => { img.onload = res; img.onerror = rej; });
-  img.src = 'test.png';
-  await loaded;
-  texture = gltex(gl, img);
+  page = cameraCorrection ? 'live' : 'calibration';
+  update();
 };
-document.body.ondrop = async (e) => {
-  if (cleanupInput) {
-    cleanupInput();
-    cleanupInput = null;
-  }
 
-  e.preventDefault();
-  const items = Array.from(e.dataTransfer.items);
-  const image = items.find(item => item.type.startsWith('image/'));
-  const urls = items.find(item => item.type === 'text/uri-list');
+buttons.calibrate.onclick = () => {
+  cameraCorrection = calibrate(gl, template);
+  localStorage.density_lens_corr = JSON.stringify(cameraCorrection);
+  page = 'live';
+  update();
+};
 
-  let url;
-  if (image) {
-    url = URL.createObjectURL(image.getAsFile());
-    cleanupInput = () => URL.revokeObjectURL(url);
-  } else if (urls) {
-    url = await new Promise(res => urls.getAsString(res));
-  } else {
-    return;
-  }
+buttons.recalibrate.onclick = () => {
+  cameraCorrection = null;
+  page = 'calibration';
+  update();
+};
 
-  const img = document.createElement('img');
-  const loaded = new Promise((res, rej) => { img.onload = res; img.onerror = rej; });
-  img.src = url;
-  window.IMG = img;
-  await loaded;
-  texture = gltex(gl, img);
+buttons.credits.onclick = () => {
+  page = 'credits';
+  update();
 };
-document.body.ondragover = (e) => {
-  e.preventDefault();
-  e.dataTransfer.dropEffect = "copy";
+buttons.back.onclick = () => {
+  page = 'live';
+  update();
 };
-color.oninput = () => {
-  const bigint = parseInt(color.value.slice(1), 16);
-  const r = (bigint >> 16) & 0xff;
-  const g = (bigint >> 8) & 0xff;
-  const b = bigint & 0xff;
-  program.bind();
-  program.uniforms.lensColor = [r / 0xff, g / 0xff, b / 0xff];
-};
-color.onchange = color.oninput;
-buttonAll.onclick = () => { color.value = '#ffffff'; color.onchange(); };
-buttonC.onclick = () => { color.value = '#ff0000'; color.onchange(); };
-buttonM.onclick = () => { color.value = '#00ff00'; color.onchange(); };
-buttonY.onclick = () => { color.value = '#0000ff'; color.onchange(); };
+
+buttons.c.onclick = () => {
+  mode = 'c';
+  update();
+}
+buttons.m.onclick = () => {
+  mode = 'm';
+  update();
+}
+buttons.y.onclick = () => {
+  mode = 'y';
+  update();
+}
 
 gl = glctx(canvas, { depth: false, stencil: false, antialias: true, preserveDrawingBuffer: true }, render);
 gl.clearColor(0, 0, 0, 1);
-program = glshd(gl, glslify('./shaders/quad.vert'), glslify('./shaders/cmyk.frag'));
+program = glshd(gl, glslify('./assets/shaders/quad.vert'), glslify('./assets/shaders/cmyk.frag'));
 
-canvas.onclick = (e) => {
-  const x = Math.floor(e.clientX - canvas.offsetLeft);
-  const y = canvas.height - Math.floor(e.clientY - canvas.offsetTop);
+const resize = () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 
-  const pixels = new Uint8Array(4);
-  gl.readPixels(
-    x, y,
-    1, 1,
-    gl.RGBA,
-    gl.UNSIGNED_BYTE,
-    pixels
-  );
-
-  const [r, g, b] = pixels;
-  const num = r << 16 | g << 8 | b;
-  let hex = num.toString(16);
-  hex = '#' + '0'.repeat(6 - hex.length) + hex;
-  console.log(hex, Array.from(pixels).map(n => (n/255).toFixed(2)).join(' '));
+  gl.viewport(0, 0, canvas.width, canvas.height);
 };
-
 window.onresize = resize;
 resize();
+update();
 
-window.onkeydown = (e) => {
-  if (e.key === ' ') {
-    mix = 1 - mix;
-    program.bind();
-    program.uniforms.globalMix = mix;
-  }
-};
-
-color.onchange();
-buttonImage.onclick();
+buttons.start.disabled = false;

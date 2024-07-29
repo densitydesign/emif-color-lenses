@@ -6,6 +6,6 @@ COPY . .
 RUN npm run build
 
 FROM nginx:alpine
-COPY index.html *.css *.png /usr/share/nginx/html/
+COPY index.html assets /usr/share/nginx/html/
 COPY --from=build-env /app/bundle.js /usr/share/nginx/html/
 RUN chmod -R 777 /usr/share/nginx/html

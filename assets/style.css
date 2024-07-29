@@ -1,0 +1,137 @@
+@font-face {
+  font-family: Manrope;
+  font-weight: 400 800;
+  src: url(font/Manrope-VariableFont_wght.ttf);
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+p, h1 {
+  margin: 0;
+}
+
+img { width: 100%; }
+
+:root {
+  --black: #000000;
+  --white: #ffffff;
+  --cyan: #00adee;
+  --magenta: #ed6ea7;
+  --yellow: #fff200;
+
+  --black-trans: #000000aa;
+  --white-trans: #ffffff66;
+
+  --color: var(--white);
+  color: var(--black);
+
+  font-size: 20px;
+  font-family: Manrope;
+}
+
+
+.cyan { --color: var(--cyan); }
+.magenta { --color: var(--magenta); }
+.yellow { --color: var(--yellow); }
+
+canvas, .page {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.page {
+  visibility: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s;
+  background: var(--white);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 40px;
+
+  overflow-y: auto;
+
+  text-align: center;
+  text-wrap: pretty;
+  padding: 50px;
+  box-sizing: border-box;
+}
+.page.page-opaque {
+  background: var(--white);
+}
+.page.visible {
+  opacity: 1;
+  pointer-events: all;
+  visibility: visible;
+}
+
+#page-calibration {
+  background: var(--white-trans);
+}
+
+button {
+  padding: 10px 20px;
+  border: 3px solid currentColor;
+  border-radius: 99999px;
+  background: var(--color);
+  cursor: pointer;
+
+  line-height: 20px;
+  font-size: 15px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+button:disabled {
+  color: var(--black-trans);
+}
+
+a {
+  font-weight: 300;
+  color: var(--black);
+}
+
+#page-live {
+  background: none;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+#page-live > nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+#page-live > #buttons-bottom {
+  justify-content: center;
+}
+
+#buttons-bottom > button label {
+  display: block;
+  opacity: 0;
+  max-width: 0;
+  transition: opacity 0.5s 0.3s, max-width 1s;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: none;
+}
+
+#buttons-bottom > button.active label {
+  max-width: 100vw;
+  opacity: 1;
+}
+
+#page-credits div {
+  display: flex;
+  flex-direction: column;
+}
