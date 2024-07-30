@@ -148,7 +148,7 @@ buttons.y.onclick = () => {
 
 gl = glctx(canvas, { depth: false, stencil: false, antialias: true, preserveDrawingBuffer: true }, render);
 gl.clearColor(0, 0, 0, 1);
-program = glshd(gl, glslify('./assets/shaders/quad.vert'), glslify('./assets/shaders/cmyk.frag'));
+program = glshd(gl, glslify('./shaders/quad.vert'), glslify('./shaders/cmyk.frag'));
 
 const resize = () => {
   canvas.width = window.innerWidth;
