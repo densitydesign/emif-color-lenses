@@ -112,6 +112,7 @@ buttons.start.onclick = async () => {
 };
 
 buttons.calibrate.onclick = () => {
+  render();
   cameraCorrection = calibrate(gl, template);
   localStorage.density_lens_corr = JSON.stringify(cameraCorrection);
   page = 'live';
@@ -146,7 +147,7 @@ buttons.y.onclick = () => {
   update();
 }
 
-gl = glctx(canvas, { depth: false, stencil: false, antialias: true, preserveDrawingBuffer: true }, render);
+gl = glctx(canvas, { depth: false, stencil: false, antialias: true }, render);
 gl.clearColor(0, 0, 0, 1);
 program = glshd(gl, glslify('./shaders/quad.vert'), glslify('./shaders/cmyk.frag'));
 

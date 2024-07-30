@@ -27,7 +27,7 @@ const getCenter = (el) => {
   return [rect.x + rect.width/2, rect.y + rect.height/2];
 };
 
-const f = ( col ) => {
+const fmt = ( col ) => {
   const [r, g, b] = col.map(c => Math.floor(c * 255)); 
   const num = r << 16 | g << 8 | b;
   let hex = num.toString(16);
@@ -48,7 +48,7 @@ module.exports = (gl, svg) => {
 
     for (const sample of region.children) {
       let [x, y] = getCenter(sample);
-      y = svg.clientHeight - y;
+      y = window.innerHeight - y;
 
       gl.readPixels(
         x, y,
@@ -68,7 +68,7 @@ module.exports = (gl, svg) => {
     reference.push(JSON.parse(region.dataset.color));
   }
 
-  console.table({ reference: reference.map(f), measured: measured.map(f) });
+  console.table({ reference: reference.map(fmt), measured: measured.map(fmt) });
   const mat = math.multiply(math.pinv(measured), reference);
   console.log(mat);
   return mat;
