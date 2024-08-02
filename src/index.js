@@ -5,6 +5,7 @@ const gltex = require("gl-texture2d");
 const gltri = require("a-big-triangle");
 const math = require("mathjs");
 const calibrate = require("./calibrate.js");
+const tween = require("./tween.js");
 
 const pages = Object.fromEntries(
   ['start', 'calibration', 'live', 'credits']
@@ -21,7 +22,7 @@ let gl, program, texture;
 let updateInput, cleanupInput;
 let mix = 0;
 
-let cameraCorrection = localStorage.density_lens_corr && JSON.parse(localStorage.density_lens_corr);
+let cameraCorrection = null; // localStorage.density_lens_corr && JSON.parse(localStorage.density_lens_corr);
 
 const screenCorrection = (() => {
   const colors = [0x00adee, 0xed6ea7, 0xfff200];
@@ -51,10 +52,14 @@ const update = () => {
   buttons.m.classList.toggle('active', mode === 'm');
   buttons.y.classList.toggle('active', mode === 'y');
 
+  lensColor = tween(lensColor(), lenses[mode], 0.1);
+
   for (const p in pages) {
     pages[p].classList.toggle('visible', page === p);
   }
 };
+
+let lensColor = tween(lenses[mode], lenses[mode], 1);
 
 const render = () => {
   gl.clear(gl.COLOR_BUFFER_BIT);
@@ -68,7 +73,7 @@ const render = () => {
   program.uniforms.cameraCorrection = (cameraCorrection || math.identity(4).toArray()).flat(2);
   program.uniforms.screenCorrection = screenCorrection.flat(2);
   program.uniforms.stepRange = [0.4, 0.6];
-  program.uniforms.lensColor = lenses[mode];
+  program.uniforms.lensColor = lensColor();
 
   if (updateInput) updateInput();
 

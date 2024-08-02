@@ -27,17 +27,22 @@
       </nav>
     </div>
 
-    <div class="page visible" id="page-start">
+    <div class="page page-flip visible" id="page-start">
       <h1><img src="assets/title.png" alt="Stories of online harassment" /></h1>
-      <p>To explore the poster, give access to your phone camera and calibrate it.</p>
-      <button id="button-start" disabled>start</button>
-      <p>Press start when you are ready.</p>
+      <div>
+        <p>To explore the poster, give access to your phone camera and calibrate it.</p>
+        <button id="button-start" disabled>start</button>
+        <p>Press start when you are ready.</p>
+      </div>
     </div>
 
-    <div class="page" id="page-calibration">
-      <p>
-        Align the following scheme to the coloured version on the poster and the press Calibrate.
-      </p>
+    <div class="page page-flip" id="page-calibration">
+      <div class="inner">
+        <p>
+          Align the following scheme to the coloured version on the poster and press Calibrate.
+        </p>
+        <button id="button-calibrate">Calibrate</button>
+      </div>
       <svg id="svg-template" viewBox="-75 -75 150 150" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <style>
           .c { stroke: #00ffff; fill: #00ffff; }
@@ -105,22 +110,23 @@
           </g>
         </defs>
       </svg>
-      <button id="button-calibrate">Calibrate</button>
     </div>
 
     <div class="page" id="page-credits">
-      <h1><img src="assets/title.png" alt="Stories of online harassment" /></h1>
+      <div class="inner">
+        <h1><img src="assets/title.png" alt="Stories of online harassment" /></h1>
 
-      <div>
-        <p>Developed by</p>
-        <a href="https://s-ol.nu"><img src="assets/s-ol.png" alt="Sol Bekic" /></a>
-        <a href="https://s-ol.nu">s-ol.nu</a>
-      </div>
+        <div class="block">
+          <p>Developed by</p>
+          <a href="https://s-ol.nu"><img src="assets/s-ol.png" alt="Sol Bekic" /></a>
+          <a href="https://s-ol.nu">s-ol.nu</a>
+        </div>
 
-      <div>
-        <p>Designed at</p>
-        <a href="https://densitydesign.org"><img src="assets/density.svg" alt="densitydesign logo" /></a>
-        <a href="https://densitydesign.org">densitydesign.org</a>
+        <div class="block">
+          <p>Designed at</p>
+          <a href="https://densitydesign.org"><img src="assets/density.svg" alt="densitydesign logo" /></a>
+          <a href="https://densitydesign.org">densitydesign.org</a>
+        </div>
       </div>
 
       <button id="button-back">back</button>
