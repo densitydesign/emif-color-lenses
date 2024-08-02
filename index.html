@@ -10,38 +10,40 @@
 
     <div class="page" id="page-live">
       <nav>
-        <button id="button-credits">credits</button>
-        <button id="button-recalibrate">calibration</button>
+        <button data-i18n="credits" id="button-credits"></button>
+        <div class="language-select">
+          <select id="select-language"></select>
+          <button data-i18n="language-code"></button>
+        </div>
+        <button data-i18n="calibration" id="button-recalibrate"></button>
       </nav>
 
       <nav id="buttons-bottom">
         <button class="cyan" id="button-c">
-          <label>digital spaces</label>
+          <label data-i18n="label-c"></label>
         </button>
         <button class="magenta" id="button-m">
-          <label>motivations</label>
+          <label data-i18n="label-m"></label>
         </button>
         <button class="yellow" id="button-y">
-          <label>relationships</label>
+          <label data-i18n="label-y"></label>
         </button>
       </nav>
     </div>
 
     <div class="page page-flip visible" id="page-start">
-      <h1><img src="assets/title.png" alt="Stories of online harassment" /></h1>
+      <h1><img src="assets/title.png" data-i18n-alt="title" alt="Stories of online harassment" /></h1>
       <div>
-        <p>To explore the poster, give access to your phone camera and calibrate it.</p>
-        <button id="button-start" disabled>start</button>
-        <p>Press start when you are ready.</p>
+        <p data-i18n="start-intro">To explore the poster, give access to your phone camera and calibrate it.</p>
+        <button data-i18n="start-button" id="button-start" disabled>start</button>
+        <p data-i18n="start-cta">Press start when you are ready.</p>
       </div>
     </div>
 
     <div class="page page-flip" id="page-calibration">
       <div class="inner">
-        <p>
-          Align the following scheme to the coloured version on the poster and press Calibrate.
-        </p>
-        <button id="button-calibrate">Calibrate</button>
+        <p data-i18n="calibration-intro"></p>
+        <button data-i18n="calibration-button" id="button-calibrate"></button>
       </div>
       <svg id="svg-template" viewBox="-75 -75 150 150" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <style>
@@ -114,22 +116,22 @@
 
     <div class="page" id="page-credits">
       <div class="inner">
-        <h1><img src="assets/title.png" alt="Stories of online harassment" /></h1>
+        <h1><img src="assets/title.png" data-i18n-alt="title" /></h1>
 
         <div class="block">
-          <p>Developed by</p>
+          <p data-i18n="credits-developed"></p>
           <a href="https://s-ol.nu"><img src="assets/s-ol.png" alt="Sol Bekic" /></a>
           <a href="https://s-ol.nu">s-ol.nu</a>
         </div>
 
         <div class="block">
-          <p>Designed at</p>
+          <p data-i18n="credits-designed">t</p>
           <a href="https://densitydesign.org"><img src="assets/density.svg" alt="densitydesign logo" /></a>
           <a href="https://densitydesign.org">densitydesign.org</a>
         </div>
       </div>
 
-      <button id="button-back">back</button>
+      <button data-i18n="credits-back" id="button-back"></button>
     </div>
 
     <script src="bundle.js"></script>

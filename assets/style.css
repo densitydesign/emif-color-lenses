@@ -131,6 +131,25 @@ a {
   justify-content: center;
 }
 
+#page-live .language-select {
+  position: relative;
+}
+
+#page-live .language-select button {
+  pointer-events: none;
+}
+
+#page-live .language-select select {
+  opacity: 0;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  font: inherit;
+  font-size: inherit;
+}
+
 #buttons-bottom > button label {
   display: block;
   opacity: 0;

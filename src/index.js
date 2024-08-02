@@ -1,3 +1,6 @@
+const i18n = require("./i18n.js");
+i18n(document.getElementById('select-language'));
+
 const glctx = require("gl-context");
 const glslify = require("glslify");
 const glshd = require("gl-shader");

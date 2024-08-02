@@ -1,0 +1,42 @@
+{
+  "en": {
+    "language-code": "en",
+    "language-name": "English",
+
+    "label-c": "digital spaces",
+    "label-m": "motivations",
+    "label-y": "relationships",
+    "credits": "credits",
+    "calibration": "calibration",
+
+    "title": "Stories of Online Harassment",
+    "start-intro": "To explore the poster, give access to your phone camera and calibrate it.",
+    "start-button": "start",
+    "start-cta": "Press start when you are ready.",
+    "calibration-intro": "Align the following scheme to the coloured version on the poster and press Calibrate.",
+    "calibration-button": "calibrate",
+    "credits-developed": "Developed by",
+    "credits-designed": "Designed by",
+    "credits-back": "back"
+  },
+  "de": {
+    "language-code": "de",
+    "language-name": "Deutsch",
+
+    "label-c": "digitale räume",
+    "label-m": "motivationen",
+    "label-y": "beziehungen",
+    "credits": "impressum",
+    "calibration": "kalibrierung",
+
+    "title": "Stories of Online Harassment",
+    "start-intro": "Gib den Kamerazugriff frei und kalibriere die Farbwerte um das Poster zu erforschen.",
+    "start-button": "start",
+    "start-cta": "Drücke auf start wenn du bereit bist.",
+    "calibration-intro": "Richte das Bild an dem bunten Symbol auf dem Poster aus und bestätige um das Bild zu kalibrieren.",
+    "calibration-button": "kalibrieren",
+    "credits-developed": "Entwickelt von",
+    "credits-designed": "Designed von",
+    "credits-back": "zurück"
+  }
+}
