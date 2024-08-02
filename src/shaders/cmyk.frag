@@ -22,6 +22,10 @@ void main() {
   vec2 st = uv / (textureRes / min(textureRes.x, textureRes.y));
   st = st / 2.0 + 0.5;
 
+  if (st.x < 0.0 || st.x > 1.0 || st.y < 0.0 || st.y > 1.0) {
+    gl_FragColor = vec4(1);
+    return;
+  }
   vec3 texcol = texture2D(texture, st).rgb;
   vec3 col = texcol;
 
