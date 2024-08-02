@@ -45,57 +45,82 @@
         <p data-i18n="calibration-intro"></p>
         <button data-i18n="calibration-button" id="button-calibrate"></button>
       </div>
-      <svg id="svg-template" viewBox="-75 -75 150 150" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <svg id="calibration-template" viewBox="-75 -75 150 150" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <style>
-          .c { stroke: #00ffff; fill: #00ffff; }
-          .m { stroke: #ff00ff; fill: #ff00ff; }
-          .y { stroke: #ffff00; fill: #ffff00; }
-          circle { mix-blend-mode: multiply; }
-          circle.s { fill: none; stroke: #000; stroke-width: 1px; }
-          circle.a { fill: none; stroke: #000; stroke-width: 1px; }
-          #calibration-samples { fill: none; stroke: #000; stroke-width: 0.2px; }
+          svg {
+            fill: none;
+            stroke-width: 2px;
+            stroke-linecap: square;
 
-          circle.s, circle.f { display: none; }
+            --cyan: #00adee;
+            --magenta: #ed6ea7;
+            --yellow: #fff200;
+          }
+          .c { stroke: var(--cyan); }
+          .m { stroke: var(--magenta); }
+          .y { stroke: var(--yellow); }
+
+          .m .r, .y .l { stroke: #ed1c24; }
+          .y .r, .c .l { stroke: #00a651; }
+          .c .r, .m .l { stroke: #2e3192; }
+          .a { stroke: #000000; }
+
+          #calibration-samples { fill: none; stroke: #000; stroke-width: 0.2px; }
           #x { stroke: transparent; }
         </style>
-        <use class="c" transform="rotate(-60)" href="#segment" />
-        <use class="m" transform="rotate(60)" href="#segment" />
-        <use class="y" transform="rotate(180)" href="#segment" />
+        <g class="c" transform="rotate(-60)">
+          <path d="M -39.315876 -22.633734 A 40 40 0 0 1 -40 -30 A 40 40 0 0 1 0 -70 A 40 40 0 0 1 40 -30 L 40 -30 A 40 40 0 0 1 39.315852 -22.633605 " />
+          <path class="r" d="M -0.02181706,-15.395162 A 40,40 0 0 1 39.259345,-22.731674" />
+          <path class="l" d="m -39.259343,-22.731674 a 40,40 0 0 1 39.28115896,7.336511" />
+          <path class="a" d="M 0.02181596,-15.395163 A 40,40 0 0 1 8.660254,-5 40,40 0 0 1 13.330675,7.6100789 m -26.664684,0.017761 A 40,40 0 0 1 -8.6602544,-5 40,40 0 0 1 -0.02181704,-15.395162" />
+        </g>
+        <g class="m" transform="rotate(60)">
+          <path d="M -39.315876 -22.633734 A 40 40 0 0 1 -40 -30 A 40 40 0 0 1 0 -70 A 40 40 0 0 1 40 -30 L 40 -30 A 40 40 0 0 1 39.315852 -22.633605 " />
+          <path class="r" d="M -0.02181706,-15.395162 A 40,40 0 0 1 39.259345,-22.731674" />
+          <path class="l" d="m -39.259343,-22.731674 a 40,40 0 0 1 39.28115896,7.336511" />
+          <path class="a" d="M 0.02181596,-15.395163 A 40,40 0 0 1 8.660254,-5 40,40 0 0 1 13.330675,7.6100789 m -26.664684,0.017761 A 40,40 0 0 1 -8.6602544,-5 40,40 0 0 1 -0.02181704,-15.395162" />
+        </g>
+        <g class="y" transform="rotate(-180)">
+          <path d="M -39.315876 -22.633734 A 40 40 0 0 1 -40 -30 A 40 40 0 0 1 0 -70 A 40 40 0 0 1 40 -30 L 40 -30 A 40 40 0 0 1 39.315852 -22.633605 " />
+          <path class="r" d="M -0.02181706,-15.395162 A 40,40 0 0 1 39.259345,-22.731674" />
+          <path class="l" d="m -39.259343,-22.731674 a 40,40 0 0 1 39.28115896,7.336511" />
+          <path class="a" d="M 0.02181596,-15.395163 A 40,40 0 0 1 8.660254,-5 40,40 0 0 1 13.330675,7.6100789 m -26.664684,0.017761 A 40,40 0 0 1 -8.6602544,-5 40,40 0 0 1 -0.02181704,-15.395162" />
+        </g>
 
         <g id="calibration-samples">
-          <g data-color="[1, 0, 0, 1]">
+          <g data-color="[1, 0, 0]">
             <use transform="rotate(-85) translate(0 -40)" href="#x" />
             <use transform="rotate(-60) translate(0 -40)" href="#x" />
             <use transform="rotate(-35) translate(0 -40)" href="#x" />
           </g>
-          <g data-color="[0, 1, 0, 1]">
+          <g data-color="[0, 1, 0]">
             <use transform="rotate( 35) translate(0 -40)" href="#x" />
             <use transform="rotate( 60) translate(0 -40)" href="#x" />
             <use transform="rotate( 85) translate(0 -40)" href="#x" />
           </g>
-          <g data-color="[0, 0, 1, 1]">
+          <g data-color="[0, 0, 1]">
             <use transform="rotate(155) translate(0 -40)" href="#x" />
             <use transform="rotate(180) translate(0 -40)" href="#x" />
             <use transform="rotate(205) translate(0 -40)" href="#x" />
           </g>
-          <g data-color="[1, 1, 0, 1]">
+          <g data-color="[1, 1, 0]">
             <use transform="rotate(0) translate(0 -20)" href="#x" />
             <use transform="rotate(0) translate(0 -30)" href="#x" />
           </g>
-          <g data-color="[0, 1, 1, 1]">
+          <g data-color="[0, 1, 1]">
             <use transform="rotate(120) translate(0 -20)" href="#x" />
             <use transform="rotate(120) translate(0 -30)" href="#x" />
           </g>
-          <g data-color="[1, 0, 1, 1]">
+          <g data-color="[1, 0, 1]">
             <use transform="rotate(240) translate(0 -20)" href="#x" />
             <use transform="rotate(240) translate(0 -30)" href="#x" />
           </g>
-          <g data-color="[0, 0, 0, 1]">
+          <g data-color="[0, 0, 0]">
             <use transform="rotate(-60) translate(0 -80)" href="#x" />
             <use transform="rotate( 60) translate(0 -80)" href="#x" />
             <use transform="rotate(180) translate(0 -80)" href="#x" />
           </g>
-          <g data-color="[1, 1, 1, 1]" stroke="#fff">
+          <g data-color="[1, 1, 1]">
             <use transform="rotate(-60) translate(0 -3)" href="#x" />
             <use transform="rotate( 60) translate(0 -3)" href="#x" />
             <use transform="rotate(180) translate(0 -3)" href="#x" />
@@ -104,11 +129,6 @@
         <defs>
           <g id="x">
             <path d="M -2 -2 L 2 2 M 2 -2 L -2 2" />
-          </g>
-          <g id="segment">
-            <circle class="f" r="40" cx="0" cy="-30" />
-            <circle class="a" r="40" cx="0" cy="-30" />
-            <circle class="s" r="60" cx="0" cy="-5" />
           </g>
         </defs>
       </svg>

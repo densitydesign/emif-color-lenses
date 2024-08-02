@@ -19,7 +19,7 @@ const buttons = Object.fromEntries(
   .map(n => [n, document.getElementById(`button-${n}`)])
 );
 const canvas = document.getElementById('canvas');
-const template = document.getElementById('svg-template');
+const template = document.getElementById('calibration-template');
 let gl, program, texture;
 let updateInput, cleanupInput;
 
