@@ -18,12 +18,10 @@ const buttons = Object.fromEntries(
   ['start', 'calibrate', 'recalibrate', 'credits', 'back', 'c', 'm', 'y']
   .map(n => [n, document.getElementById(`button-${n}`)])
 );
-
 const canvas = document.getElementById('canvas');
 const template = document.getElementById('svg-template');
 let gl, program, texture;
 let updateInput, cleanupInput;
-let mix = 0;
 
 let cameraCorrection = null; // localStorage.density_lens_corr && JSON.parse(localStorage.density_lens_corr);
 
@@ -45,10 +43,12 @@ const screenCorrection = (() => {
   matrix.push([1, 1, 1, 1]);
   return matrix;
 })();
+const lenses = {c: [1,0,0], m: [0,1,0], y: [0,0,1]};
 
 let mode = 'c';
 let page = 'start';
-const lenses = {c: [1,0,0], m: [0,1,0], y: [0,0,1]};
+let lensColor = tween(lenses[mode], lenses[mode], 1);
+let globalMix = tween(0, 0, 1);
 
 const update = () => {
   buttons.c.classList.toggle('active', mode === 'c');
@@ -56,13 +56,12 @@ const update = () => {
   buttons.y.classList.toggle('active', mode === 'y');
 
   lensColor = tween(lensColor(), lenses[mode], 0.1);
+  globalMix = tween(globalMix(), cameraCorrection ? 0 : 1, 0.1);
 
   for (const p in pages) {
     pages[p].classList.toggle('visible', page === p);
   }
 };
-
-let lensColor = tween(lenses[mode], lenses[mode], 1);
 
 const render = () => {
   gl.clear(gl.COLOR_BUFFER_BIT);
@@ -72,11 +71,11 @@ const render = () => {
     program.uniforms.textureRes = [texture.width, texture.height];
   }
 
-  program.uniforms.globalMix = cameraCorrection ? 0 : 1;
   program.uniforms.cameraCorrection = (cameraCorrection || math.identity(4).toArray()).flat(2);
   program.uniforms.screenCorrection = screenCorrection.flat(2);
   program.uniforms.stepRange = [0.4, 0.6];
   program.uniforms.lensColor = lensColor();
+  program.uniforms.globalMix = globalMix();
 
   if (updateInput) updateInput();
 
