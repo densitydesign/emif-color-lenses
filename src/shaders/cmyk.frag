@@ -27,14 +27,13 @@ void main() {
     return;
   }
   vec3 texcol = texture2D(texture, st).rgb;
+  vec3 fadedcol = (screenCorrection * vec4(lensColor / 6.0, 1.0)).rgb;
   vec3 col = texcol;
 
   col = (cameraCorrection * vec4(col, 1.0)).rgb;
   col = smoothstep(stepRange.x, stepRange.y, col);
-  col *= lensColor;
-  col = (screenCorrection * vec4(col, 1.0)).rgb;
+  col = mix(vec3(0), fadedcol, dot(col, lensColor));
 
-  gl_FragColor = vec4(col.xyz, 1.0);
-
+  gl_FragColor = vec4(col, 1.0);
   gl_FragColor.rgb = mix(gl_FragColor.rgb, texcol, globalMix);
 }
