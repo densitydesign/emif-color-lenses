@@ -18,6 +18,10 @@ const buttons = Object.fromEntries(
   ['start', 'calibrate', 'recalibrate', 'credits', 'back', 'c', 'm', 'y']
   .map(n => [n, document.getElementById(`button-${n}`)])
 );
+const sliders = Object.fromEntries(
+  ['input', 'label']
+  .map(n => [n, document.getElementById(`slider-${n}`)])
+);
 const canvas = document.getElementById('canvas');
 const template = document.getElementById('calibration-template');
 let gl, program, texture;
@@ -44,6 +48,7 @@ const screenCorrection = (() => {
   return matrix;
 })();
 const lenses = {c: [1,0,0], m: [0,1,0], y: [0,0,1]};
+const thresholds = {c: 0.48, m: 0.45, y: 0.32};
 
 let mode = 'c';
 let page = 'start';
@@ -58,9 +63,17 @@ const update = () => {
   lensColor = tween(lensColor(), lenses[mode], 0.1);
   globalMix = tween(globalMix(), cameraCorrection ? 0 : 1, 0.1);
 
+  sliders.input.value = thresholds[mode];
+  sliders.label.innerText = `${mode.toUpperCase()}: ${thresholds[mode].toFixed(2)}`;
+
   for (const p in pages) {
     pages[p].classList.toggle('visible', page === p);
   }
+};
+
+sliders.input.oninput = (e) => {
+  thresholds[mode] = +e.target.value;
+  sliders.label.innerText = `${mode.toUpperCase()}: ${thresholds[mode].toFixed(2)}`;
 };
 
 const render = () => {
@@ -73,7 +86,7 @@ const render = () => {
 
   program.uniforms.cameraCorrection = (cameraCorrection || math.identity(4).toArray()).flat(2);
   program.uniforms.screenCorrection = screenCorrection.flat(2);
-  program.uniforms.stepRange = [0.4, 0.6];
+  program.uniforms.stepRange = [thresholds[mode]-0.1, thresholds[mode]+0.1];
   program.uniforms.lensColor = lensColor();
   program.uniforms.globalMix = globalMix();
 

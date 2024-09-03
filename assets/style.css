@@ -90,7 +90,7 @@ canvas, .page {
   order: 3;
 }
 
-button {
+button, .button {
   padding: 10px 20px;
   border: 3px solid currentColor;
   border-radius: 99999px;
