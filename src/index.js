@@ -19,7 +19,7 @@ const buttons = Object.fromEntries(
   .map(n => [n, document.getElementById(`button-${n}`)])
 );
 const sliders = Object.fromEntries(
-  ['input', 'label']
+  ['input']
   .map(n => [n, document.getElementById(`slider-${n}`)])
 );
 const canvas = document.getElementById('canvas');
@@ -64,7 +64,7 @@ const update = () => {
   globalMix = tween(globalMix(), cameraCorrection ? 0 : 1, 0.1);
 
   sliders.input.value = thresholds[mode];
-  sliders.label.innerText = `${mode.toUpperCase()}: ${thresholds[mode].toFixed(2)}`;
+  // sliders.label.innerText = `${mode.toUpperCase()}: ${thresholds[mode].toFixed(2)}`;
 
   for (const p in pages) {
     pages[p].classList.toggle('visible', page === p);
@@ -73,7 +73,7 @@ const update = () => {
 
 sliders.input.oninput = (e) => {
   thresholds[mode] = +e.target.value;
-  sliders.label.innerText = `${mode.toUpperCase()}: ${thresholds[mode].toFixed(2)}`;
+  // sliders.label.innerText = `${mode.toUpperCase()}: ${thresholds[mode].toFixed(2)}`;
 };
 
 const render = () => {
