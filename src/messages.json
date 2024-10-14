@@ -38,5 +38,25 @@
     "credits-developed": "Entwickelt von",
     "credits-designed": "Designed von",
     "credits-back": "zurück"
+  },
+  "it": {
+    "language-code": "it",
+    "language-name": "Italiano",
+
+    "label-c": "Spazi digitali",
+    "label-m": "Motivazioni",
+    "label-y": "Relazioni",
+    "credits": "Ringraziamenti",
+    "calibration": "Calibrazione ",
+
+    "title": "Storie di molestie online",
+    "start-intro": "Per esplorare il poster, autorizza l’accesso alla fotocamera del telefono ed esegui la calibrazione.",
+    "start-button": "start",
+    "start-cta": "Premi Start quando sei pronto/a. ",
+    "calibration-intro": "Allinea il seguente diagramma alla versione colorata sul poster, quindi premi Calibra.",
+    "calibration-button": "Calibra",
+    "credits-developed": "Sviluppato da",
+    "credits-designed": "Progettato da",
+    "credits-back": "Indietro"
   }
 }
