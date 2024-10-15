@@ -1,5 +1,5 @@
 const messages = require('./messages.json');
-const languages = ['en', 'de'];
+const languages = ['en', 'de', 'it'];
 
 const getString = (lang, key) => {
   if (!(key in messages[lang])) console.error(`untranslated key in lang ${lang}: ${key}`);
