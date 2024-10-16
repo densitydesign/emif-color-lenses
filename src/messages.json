@@ -58,5 +58,45 @@
     "credits-developed": "Sviluppato da",
     "credits-designed": "Progettato da",
     "credits-back": "Indietro"
+  },
+  "gr": {
+    "language-code": "gr",
+    "language-name": "Eλληνικά",
+
+    "label-c": "Ηλεκτρονικό κενό",
+    "label-m": "Κίνητρα",
+    "label-y": "Σχέσεις",
+    "credits": "Δικαιώματα",
+    "calibration": "Βαθμονόμηση  / Ρύθμιση",
+
+    "title": "Ιστορίες διαδικτυακής παρενόχλησης",
+    "start-intro": "Για να εξερευνήσετε- δείτε  την Αφίσα / Πόστερ επιτρέψτε πρόσβαση στην κάμερα του κινητού σας τηλεφώνου και ρυθμίστε την.",
+    "start-button": "Ξεκινήστε",
+    "start-cta": "Πατήστε “ ‘Εναρξη” οταν είστε έτοιμοι.",
+    "calibration-intro": "Ευθυγραμμίστε το παρακάτω διάγραμμα με την έγχρωμη έκδοση της αφίσας και, στη συνέχεια, πατήστε Ρύθμιση / Διαμόρφωση .",
+    "calibration-button": "Ρυθμίστε",
+    "credits-developed": "Δημιουργήθηκε από",
+    "credits-designed": "Σχεδιάστηκε στο",
+    "credits-back": "Πίσω"
+  },
+  "ro": {
+    "language-code": "ro",
+    "language-name": "Romanian",
+
+    "label-c": "Spații digitale",
+    "label-m": "Motivații",
+    "label-y": "Relații",
+    "credits": "Contribuții creative",
+    "calibration": "Calibrație",
+
+    "title": "Povești despre hărțuirea online",
+    "start-intro": "Pentru a explora posterul, permite accesul la camera telefonului și calibreaz-o.",
+    "start-button": "start",
+    "start-cta": "Apasă start atunci când ești gata.",
+    "calibration-intro": "Aliniază următoarea diagramă cu versiunea colorată de pe poster și apoi apasă Calibrare.",
+    "calibration-button": "Calibrație",
+    "credits-developed": "Dezvoltat de",
+    "credits-designed": "Conceput la",
+    "credits-back": "Înapoi"
   }
 }
