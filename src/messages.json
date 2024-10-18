@@ -98,5 +98,25 @@
     "credits-developed": "Dezvoltat de",
     "credits-designed": "Conceput la",
     "credits-back": "Înapoi"
+  },
+  "ee": {
+    "language-code": "ee",
+    "language-name": "Eesti keel",
+
+    "label-c": "Digikeskkonnad",
+    "label-m": "Motiivid",
+    "label-y": "Suhted",
+    "credits": "Tegijad",
+    "calibration": "Kalibreerimine",
+
+    "title": "Küberahistamise lood",
+    "start-intro": "Postri uurimiseks anna ligipääs oma telefoni kaamerale ning kalibreeri kaamerat",
+    "start-button": "Start",
+    "start-cta": "Vajuta Start, kui oled valmis",
+    "calibration-intro": "Joonda allpool olev kujutis plakatil oleva värvilise versiooniga ja seejärel vajuta nuppu Kalibreeri.",
+    "calibration-button": "Kalibreeri",
+    "credits-developed": "Arendanud:",
+    "credits-designed": "Kujundanud:",
+    "credits-back": "Tagasi"
   }
 }
