@@ -89,6 +89,17 @@ canvas, .page {
 #page-calibration #button-calibrate {
   order: 3;
 }
+#page-calibration svg {
+  max-height: 90vh;
+}
+
+button, .button, .button-text {
+  line-height: 20px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
 
 button, .button {
   padding: 10px 20px;
@@ -97,12 +108,6 @@ button, .button {
   background: var(--color);
   color: inherit;
   cursor: pointer;
-
-  line-height: 20px;
-  font: inherit;
-  font-size: 15px;
-  font-weight: 800;
-  text-transform: uppercase;
 
   transition: border-color 0.5s, color 0.5s;
 }
@@ -153,6 +158,7 @@ a {
 
 #buttons-bottom > * {
   margin: 0 auto;
+  align-items: flex-start;
 }
 
 #buttons-bottom div {
@@ -177,8 +183,14 @@ a {
   transition-delay: 0, 0.3s;
 }
 
+#slider-section {
+  flex-direction: column;
+  align-items: center;
+}
+
 #slider-input {
   width: calc(160px + 3*46px);
+  height: 46px;
 }
 
 input[type=range] {

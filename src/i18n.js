@@ -3,7 +3,7 @@ const languages = ['en', 'de', 'it', 'gr', 'ro'];
 
 const getString = (lang, key) => {
   if (!(key in messages[lang])) console.error(`untranslated key in lang ${lang}: ${key}`);
-  return messages[lang][key] ?? key;
+  return messages[lang][key] ?? messages.en[key] ?? key;
 }
 
 const update = (lang) => {
@@ -27,7 +27,6 @@ module.exports = (select) => {
       const code = lang.toLowerCase().split('-').shift();
       if (languages.indexOf(code) > -1) {
         select.value = code;
-        console.log('found', code);
         break;
       }
     }
