@@ -11,17 +11,6 @@ const names = [
   'white',
 ];
 
-const reference = [
-  [1,0,0,1],
-  [0,1,0,1],
-  [0,0,1,1],
-  [1,1,0,1],
-  [0,1,1,1],
-  [1,0,1,1],
-  [1,1,1,1],
-  [0,0,0,1],
-];
-
 const getCenter = (el) => {
   const rect = el.getBoundingClientRect();
   return [rect.x + rect.width/2, rect.y + rect.height/2];
@@ -65,7 +54,7 @@ module.exports = (gl, svg) => {
       .reduce((a, b) => a.map((ac, i) => ac + b[i]), [0, 0, 0, 0])
       .map(c => c / samples.length);
     measured.push(average);
-    reference.push(JSON.parse(region.dataset.color));
+    reference.push([...JSON.parse(region.dataset.color), 1]);
   }
 
   console.table({ reference: reference.map(fmt), measured: measured.map(fmt) });

@@ -1,0 +1,23 @@
+<svg id="calibration-template" viewBox="0 0 339 341" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M83.8173 91.7888L40.4219 116.857V166.993V217.011L83.8173 192.061L127.213 166.993V116.857V66.7208L83.8173 91.7888Z" stroke="#29ABE2" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.1 6"/>
+<path d="M253.378 91.7888L209.983 66.7208V116.857V166.993L253.378 192.061L296.774 217.011V166.993V116.857L253.378 91.7888Z" stroke="#EC6EA7" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.1 6"/>
+<path d="M211.993 263.718L168.598 238.65L125.203 263.718L81.8071 288.786L125.203 313.854L168.598 338.804L211.993 313.854L255.389 288.786L211.993 263.718Z" stroke="#FCEE23" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.1 6"/>
+<path d="M127.213 166.993V214.764L168.598 238.65L81.8071 288.786L40.4219 217.129L127.213 166.993Z" stroke="#6ABD45" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.1 6"/>
+<path d="M127.212 66.7208H209.983V166.993L168.598 143.107L127.212 166.993V66.7208Z" stroke="#3A53A4" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.1 6"/>
+<path d="M168.598 238.65L209.983 214.764V166.993L296.774 217.129L255.389 288.786L168.598 238.65Z" stroke="#ED2224" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.1 6"/>
+<path d="M127.212 166.993L168.598 143.107L209.983 166.993V214.764L168.598 238.65L127.212 214.764V166.993Z" stroke="#010101" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.1 6"/>
+<g id="calibration-samples">
+  <g data-color="[1,0,0]"><circle cx="84.4512" cy="145.75" r="10" stroke="#00ADEE" stroke-width="4"/></g>
+  <g data-color="[1,1,0]"><circle cx="169.098" cy="104.75" r="10" stroke="#3A53A4" stroke-width="4"/></g>
+  <g data-color="[0,1,0]"><circle cx="252.451" cy="145.75" r="10" stroke="#EC6EA7" stroke-width="4"/></g>
+  <g data-color="[0,1,1]"><circle cx="243.451" cy="233.75" r="10" stroke="#ED2224" stroke-width="4"/></g>
+  <g data-color="[1,0,1]"><circle cx="94.4512" cy="233.75" r="10" stroke="#6ABD45" stroke-width="4"/></g>
+  <g data-color="[0,0,1]"><circle cx="169.098" cy="292.75" r="10" stroke="#F6EB16" stroke-width="4"/></g>
+  <g data-color="[0,0,0]"><circle cx="169.098" cy="190.75" r="10" stroke="#010101" stroke-width="4"/></g>
+  <g data-color="[1,1,1]">
+    <circle cx="12" cy="284.75" r="10" stroke="white" stroke-width="4"/>
+    <circle data-color="[1,1,1]" cx="326.726" cy="284.75" r="10" stroke="white" stroke-width="4"/>
+    <circle data-color="[1,1,1]" cx="169.363" cy="12" r="10" stroke="white" stroke-width="4"/>
+  </g>
+</g>
+</svg>

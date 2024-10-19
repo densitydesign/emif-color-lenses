@@ -23,11 +23,26 @@ const sliders = Object.fromEntries(
   .map(n => [n, document.getElementById(`slider-${n}`)])
 );
 const canvas = document.getElementById('canvas');
-const template = document.getElementById('calibration-template');
+let template = document.getElementById('calibration-template');
 let gl, program, texture;
 let updateInput, cleanupInput;
 
 let cameraCorrection = null; // localStorage.density_lens_corr && JSON.parse(localStorage.density_lens_corr);
+
+let templateI = 0;
+
+const loadTemplate = async () => {
+  const res = await fetch(`assets/calibration/${templateI}.svg`);
+  if (!res.ok) throw new Error(`unable to load template ${templateI}`);
+
+  template.outerHTML = await res.text();
+  template = document.getElementById('calibration-template');
+  template.onclick = async (e) => {
+    e.stopPropagation();
+    templateI = (templateI + 1) % 3;
+    loadTemplate();
+  };
+};
 
 const screenCorrection = (() => {
   const colors = [0x00adee, 0xed6ea7, 0xfff200];
@@ -180,5 +195,6 @@ const resize = () => {
 window.onresize = resize;
 resize();
 update();
+loadTemplate();
 
 buttons.start.disabled = false;
