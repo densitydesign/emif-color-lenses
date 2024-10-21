@@ -29,6 +29,7 @@
     "label-y": "beziehungen",
     "credits": "impressum",
     "calibration": "kalibrierung",
+    "slider": "",
 
     "title": "Stories of Online Harassment",
     "start-intro": "Gib den Kamerazugriff frei und kalibriere die Farbwerte um das Poster zu erforschen.",
@@ -49,6 +50,7 @@
     "label-y": "Relazioni",
     "credits": "Ringraziamenti",
     "calibration": "Calibrazione ",
+    "slider": "Scorri per migliorare la leggibilità",
 
     "title": "Storie di molestie online",
     "start-intro": "Per esplorare il poster, autorizza l’accesso alla fotocamera del telefono ed esegui la calibrazione.",
@@ -69,6 +71,7 @@
     "label-y": "Σχέσεις",
     "credits": "Δικαιώματα",
     "calibration": "Βαθμονόμηση  / Ρύθμιση",
+    "slider": "Σύρετε για να βελτιώσετε την Ευκρίνεια",
 
     "title": "Ιστορίες διαδικτυακής παρενόχλησης",
     "start-intro": "Για να εξερευνήσετε- δείτε  την Αφίσα / Πόστερ επιτρέψτε πρόσβαση στην κάμερα του κινητού σας τηλεφώνου και ρυθμίστε την.",
@@ -89,6 +92,7 @@
     "label-y": "Relații",
     "credits": "Contribuții creative",
     "calibration": "Calibrație",
+    "slider": "Glisează pentru a îmbunătăți lizibilitatea",
 
     "title": "Povești despre hărțuirea online",
     "start-intro": "Pentru a explora posterul, permite accesul la camera telefonului și calibreaz-o.",
@@ -109,6 +113,7 @@
     "label-y": "Suhted",
     "credits": "Tegijad",
     "calibration": "Kalibreerimine",
+    "slider": "Loetavuse parandamiseks libista ekraanil",
 
     "title": "Küberahistamise lood",
     "start-intro": "Postri uurimiseks anna ligipääs oma telefoni kaamerale ning kalibreeri kaamerat",
