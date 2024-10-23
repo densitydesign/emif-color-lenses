@@ -1,87 +1,58 @@
-<svg id="calibration-template" viewBox="-75 -75 150 150" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <style>
-    svg {
-      fill: none;
-      stroke-width: 2px;
-      stroke-linecap: square;
-
-      --cyan: #00adee;
-      --magenta: #ed6ea7;
-      --yellow: #fff200;
-    }
-    .c { stroke: var(--cyan); }
-    .m { stroke: var(--magenta); }
-    .y { stroke: var(--yellow); }
-
-    .m .r, .y .l { stroke: #ed1c24; }
-    .y .r, .c .l { stroke: #00a651; }
-    .c .r, .m .l { stroke: #2e3192; }
-    .a { stroke: #000000; }
-
-    #calibration-samples { fill: none; stroke: #000; stroke-width: 0.2px; }
-    #x { stroke: transparent; }
-  </style>
-  <g class="c" transform="rotate(-60)">
-    <path d="M -39.315876 -22.633734 A 40 40 0 0 1 -40 -30 A 40 40 0 0 1 0 -70 A 40 40 0 0 1 40 -30 L 40 -30 A 40 40 0 0 1 39.315852 -22.633605 " />
-    <path class="r" d="M -0.02181706,-15.395162 A 40,40 0 0 1 39.259345,-22.731674" />
-    <path class="l" d="m -39.259343,-22.731674 a 40,40 0 0 1 39.28115896,7.336511" />
-    <path class="a" d="M 0.02181596,-15.395163 A 40,40 0 0 1 8.660254,-5 40,40 0 0 1 13.330675,7.6100789 m -26.664684,0.017761 A 40,40 0 0 1 -8.6602544,-5 40,40 0 0 1 -0.02181704,-15.395162" />
-  </g>
-  <g class="m" transform="rotate(60)">
-    <path d="M -39.315876 -22.633734 A 40 40 0 0 1 -40 -30 A 40 40 0 0 1 0 -70 A 40 40 0 0 1 40 -30 L 40 -30 A 40 40 0 0 1 39.315852 -22.633605 " />
-    <path class="r" d="M -0.02181706,-15.395162 A 40,40 0 0 1 39.259345,-22.731674" />
-    <path class="l" d="m -39.259343,-22.731674 a 40,40 0 0 1 39.28115896,7.336511" />
-    <path class="a" d="M 0.02181596,-15.395163 A 40,40 0 0 1 8.660254,-5 40,40 0 0 1 13.330675,7.6100789 m -26.664684,0.017761 A 40,40 0 0 1 -8.6602544,-5 40,40 0 0 1 -0.02181704,-15.395162" />
-  </g>
-  <g class="y" transform="rotate(-180)">
-    <path d="M -39.315876 -22.633734 A 40 40 0 0 1 -40 -30 A 40 40 0 0 1 0 -70 A 40 40 0 0 1 40 -30 L 40 -30 A 40 40 0 0 1 39.315852 -22.633605 " />
-    <path class="r" d="M -0.02181706,-15.395162 A 40,40 0 0 1 39.259345,-22.731674" />
-    <path class="l" d="m -39.259343,-22.731674 a 40,40 0 0 1 39.28115896,7.336511" />
-    <path class="a" d="M 0.02181596,-15.395163 A 40,40 0 0 1 8.660254,-5 40,40 0 0 1 13.330675,7.6100789 m -26.664684,0.017761 A 40,40 0 0 1 -8.6602544,-5 40,40 0 0 1 -0.02181704,-15.395162" />
-  </g>
-
-  <g id="calibration-samples">
-    <g data-color="[1, 0, 0]">
-      <use transform="rotate(-85) translate(0 -40)" href="#x" />
-      <use transform="rotate(-60) translate(0 -40)" href="#x" />
-      <use transform="rotate(-35) translate(0 -40)" href="#x" />
-    </g>
-    <g data-color="[0, 1, 0]">
-      <use transform="rotate( 35) translate(0 -40)" href="#x" />
-      <use transform="rotate( 60) translate(0 -40)" href="#x" />
-      <use transform="rotate( 85) translate(0 -40)" href="#x" />
-    </g>
-    <g data-color="[0, 0, 1]">
-      <use transform="rotate(155) translate(0 -40)" href="#x" />
-      <use transform="rotate(180) translate(0 -40)" href="#x" />
-      <use transform="rotate(205) translate(0 -40)" href="#x" />
-    </g>
-    <g data-color="[1, 1, 0]">
-      <use transform="rotate(0) translate(0 -20)" href="#x" />
-      <use transform="rotate(0) translate(0 -30)" href="#x" />
-    </g>
-    <g data-color="[0, 1, 1]">
-      <use transform="rotate(120) translate(0 -20)" href="#x" />
-      <use transform="rotate(120) translate(0 -30)" href="#x" />
-    </g>
-    <g data-color="[1, 0, 1]">
-      <use transform="rotate(240) translate(0 -20)" href="#x" />
-      <use transform="rotate(240) translate(0 -30)" href="#x" />
-    </g>
-    <g data-color="[0, 0, 0]">
-      <use transform="rotate(-60) translate(0 -80)" href="#x" />
-      <use transform="rotate( 60) translate(0 -80)" href="#x" />
-      <use transform="rotate(180) translate(0 -80)" href="#x" />
-    </g>
-    <g data-color="[1, 1, 1]">
-      <use transform="rotate(-60) translate(0 -3)" href="#x" />
-      <use transform="rotate( 60) translate(0 -3)" href="#x" />
-      <use transform="rotate(180) translate(0 -3)" href="#x" />
-    </g>
-  </g>
-  <defs>
-    <g id="x">
-      <path d="M -2 -2 L 2 2 M 2 -2 L -2 2" />
-    </g>
-  </defs>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 27.8.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 346 327" style="enable-background:new 0 0 346 327;" xml:space="preserve">
+<style type="text/css">
+	.st0{clip-path:url(#SVGID_00000179646866152267226990000012868225114574416774_);}
+	.st1{fill:none;stroke:#29ABE2;stroke-width:3;stroke-linecap:round;stroke-miterlimit:10;stroke-dasharray:0.1,6;}
+	.st2{fill:none;stroke:#EC6EA7;stroke-width:3;stroke-linecap:round;stroke-miterlimit:10;stroke-dasharray:0.1,6;}
+	.st3{fill:none;stroke:#3A53A4;stroke-width:3;stroke-linecap:round;stroke-miterlimit:10;stroke-dasharray:0.1,6;}
+	.st4{fill:none;stroke:#FCEE23;stroke-width:3;stroke-linecap:round;stroke-miterlimit:10;stroke-dasharray:0.1,6;}
+	.st5{fill:none;stroke:#6ABD45;stroke-width:3;stroke-linecap:round;stroke-miterlimit:10;stroke-dasharray:0.1,6;}
+	.st6{fill:none;stroke:#ED2224;stroke-width:3;stroke-linecap:round;stroke-miterlimit:10;stroke-dasharray:0.1,6;}
+	.st7{fill:none;stroke:#010101;stroke-width:3;stroke-linecap:round;stroke-miterlimit:10;stroke-dasharray:0.1,6;}
+	.st8{fill:none;stroke:#3A53A4;stroke-width:5;stroke-miterlimit:10;}
+	.st9{fill:none;stroke:#010101;stroke-width:5;stroke-miterlimit:10;}
+	.st10{fill:none;stroke:#FCEE23;stroke-width:5;stroke-miterlimit:10;}
+	.st11{fill:none;stroke:#6ABD45;stroke-width:5;stroke-miterlimit:10;}
+	.st12{fill:none;stroke:#29ABE2;stroke-width:5;stroke-miterlimit:10;}
+	.st13{fill:none;stroke:#ED2224;stroke-width:5;stroke-miterlimit:10;}
+	.st14{fill:none;stroke:#EC6EA7;stroke-width:5;stroke-miterlimit:10;}
+	.st15{fill:none;stroke:#FFFFFF;stroke-width:5;stroke-miterlimit:10;}
+</style>
+<g>
+	<g>
+		<defs>
+			<rect id="SVGID_1_" width="346" height="327"/>
+		</defs>
+		<clipPath id="SVGID_00000075126755237926481130000005075671942443182251_">
+			<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+		</clipPath>
+		<g style="clip-path:url(#SVGID_00000075126755237926481130000005075671942443182251_);">
+			<path class="st1" d="M173.3,23.5C157.1,9.7,136,1.3,113,1.3c-51.3,0-92.9,41.6-92.9,92.8c0,40.3,25.7,74.6,61.6,87.4"/>
+			<path class="st2" d="M264.4,181.7c36.2-12.7,62.1-47.1,62.1-87.6c0-51.3-41.6-92.8-92.9-92.8c-23,0-44.1,8.4-60.3,22.2"/>
+			<path class="st3" d="M142.3,111c-1-5.5-1.6-11.1-1.6-16.9c0-28.3,12.7-53.6,32.6-70.6c20,17,32.6,42.3,32.6,70.6
+				c0,5.8-0.6,11.5-1.6,17"/>
+			<path class="st4" d="M81.7,181.5c-1,5.5-1.6,11.2-1.6,17c0,51.3,41.6,92.8,92.9,92.8s92.9-41.6,92.9-92.8
+				c0-5.8-0.6-11.4-1.6-16.9"/>
+			<path class="st5" d="M173.3,164.7c-16.2,13.8-37.3,22.2-60.3,22.2c-11,0-21.5-1.9-31.3-5.4c6.1-32.9,29.6-59.7,60.5-70.5"/>
+			<path class="st6" d="M204.3,111.1c30.8,11,54,37.7,60.1,70.5c-9.6,3.4-20,5.2-30.8,5.2c-23,0-44.1-8.4-60.3-22.2"/>
+			<path class="st7" d="M142.3,111c3.9,21.4,15.2,40.2,31.1,53.7c15.8-13.5,27.1-32.2,31-53.5c-9.8-3.5-20.3-5.4-31.3-5.4
+				C162.3,105.7,151.9,107.6,142.3,111z"/>
+			<path class="st8" d="M173.3,79.8c4.8,0,8.7-3.9,8.7-8.7c0-4.8-3.9-8.7-8.7-8.7s-8.7,3.9-8.7,8.7C164.6,76,168.5,79.8,173.3,79.8z
+				"/>
+			<path class="st9" d="M173.3,137.6c4.8,0,8.7-3.9,8.7-8.7s-3.9-8.7-8.7-8.7s-8.7,3.9-8.7,8.7C164.6,133.7,168.5,137.6,173.3,137.6
+				z"/>
+			<path class="st10" d="M173.3,230c4.8,0,8.7-3.9,8.7-8.7s-3.9-8.7-8.7-8.7s-8.7,3.9-8.7,8.7C164.6,226.2,168.5,230,173.3,230z"/>
+			<path class="st11" d="M123,166.5c4.8,0,8.7-3.9,8.7-8.7s-3.9-8.7-8.7-8.7c-4.8,0-8.7,3.9-8.7,8.7S118.2,166.5,123,166.5z"/>
+			<path class="st12" d="M93.3,91.3c4.8,0,8.7-3.9,8.7-8.7S98.1,74,93.3,74s-8.7,3.9-8.7,8.7S88.5,91.3,93.3,91.3z"/>
+			<path class="st13" d="M223.2,166.5c4.8,0,8.7-3.9,8.7-8.7s-3.9-8.7-8.7-8.7s-8.7,3.9-8.7,8.7S218.4,166.5,223.2,166.5z"/>
+			<path class="st14" d="M253.2,91.8c4.8,0,8.7-3.9,8.7-8.7s-3.9-8.7-8.7-8.7s-8.7,3.9-8.7,8.7S248.4,91.8,253.2,91.8z"/>
+			<path class="st15" d="M334,45.2c4.8,0,8.7-3.9,8.7-8.7s-3.9-8.7-8.7-8.7c-4.8,0-8.7,3.9-8.7,8.7S329.3,45.2,334,45.2z"/>
+			<path class="st15" d="M13,44.8c4.8,0,8.7-3.9,8.7-8.7s-3.9-8.7-8.7-8.7s-8.7,3.9-8.7,8.7S8.2,44.8,13,44.8z"/>
+			<path class="st15" d="M173.3,322.7c4.8,0,8.7-3.9,8.7-8.7c0-4.8-3.9-8.7-8.7-8.7s-8.7,3.9-8.7,8.7
+				C164.6,318.8,168.5,322.7,173.3,322.7z"/>
+		</g>
+	</g>
+</g>
 </svg>
