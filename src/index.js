@@ -39,7 +39,7 @@ const loadTemplate = async () => {
   template = document.getElementById('calibration-template');
   template.onclick = async (e) => {
     e.stopPropagation();
-    templateI = (templateI + 1) % 3;
+    templateI = (templateI + 1) % 4;
     loadTemplate();
   };
 };

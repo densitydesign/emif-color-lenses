@@ -1,22 +1,11 @@
 const math = require('mathjs');
 
-const names = [
-  'cyan',
-  'magenta',
-  'yellow',
-  'CM',
-  'MY',
-  'CY',
-  'black',
-  'white',
-];
-
 const getCenter = (el) => {
   const rect = el.getBoundingClientRect();
   return [rect.x + rect.width/2, rect.y + rect.height/2];
 };
 
-const fmt = ( col ) => {
+const fmt = (col) => {
   const [r, g, b] = col.map(c => Math.floor(c * 255)); 
   const num = r << 16 | g << 8 | b;
   let hex = num.toString(16);
@@ -24,37 +13,52 @@ const fmt = ( col ) => {
   return hex;
 };
 
-module.exports = (gl, svg) => {
-  const regions = svg.getElementById('calibration-samples');
+const parse = (col) => {
+  if (col.length !== 7 || col[0] !== '#') throw new Error(`invalid color string '${col}'`);
+  const rgb = parseInt(col.slice(1), 16);
+  const r = (rgb >> 16) & 0xff;
+  const g = (rgb >>  8) & 0xff;
+  const b = (rgb >>  0) & 0xff;
 
-  const reference = [];
-  const measured = [];
+  return [
+    r / 0xff,
+    g / 0xff,
+    b / 0xff,
+    0,
+  ];
+};
+
+module.exports = (gl, svg) => {
+  const samples = svg.getElementById('calibration-samples');
 
   const pixels = new Uint8Array(4);
 
-  for (const region of regions.children) {
-    const samples = [];
+  const readings = {};
+  for (const sample of samples.children) {
+    let [x, y] = getCenter(sample);
+    y = window.innerHeight - y;
 
-    for (const sample of region.children) {
-      let [x, y] = getCenter(sample);
-      y = window.innerHeight - y;
+    gl.readPixels(
+      x, y,
+      1, 1,
+      gl.RGBA,
+      gl.UNSIGNED_BYTE,
+      pixels
+    );
 
-      gl.readPixels(
-        x, y,
-        1, 1,
-        gl.RGBA,
-        gl.UNSIGNED_BYTE,
-        pixels
-      );
+    const output = sample.attributes.fill.value;
+    readings[output] = readings[output] ?? [];
+    readings[output].push(Array.from(pixels).map(n => (n/255)));
+  }
 
-      samples.push(Array.from(pixels).map(n => (n/255)));
-    }
-
-    const average = samples
-      .reduce((a, b) => a.map((ac, i) => ac + b[i]), [0, 0, 0, 0])
-      .map(c => c / samples.length);
+  const measured = [];
+  const reference = [];
+  for (const output of Object.keys(readings)) {
+    const average = readings[output]
+      .reduce((a,b) => math.add(a,b))
+      .map(c => c / readings[output].length);
     measured.push(average);
-    reference.push([...JSON.parse(region.dataset.color), 1]);
+    reference.push(parse(output));
   }
 
   console.table({ reference: reference.map(fmt), measured: measured.map(fmt) });

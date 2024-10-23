@@ -34,6 +34,6 @@ void main() {
   col = smoothstep(stepRange.x, stepRange.y, col);
   col = mix(vec3(0), fadedcol, dot(col, lensColor));
 
-  gl_FragColor = vec4(col, 1.0);
+  gl_FragColor = vec4(1.0 - col, 1.0);
   gl_FragColor.rgb = mix(gl_FragColor.rgb, texcol, globalMix);
 }

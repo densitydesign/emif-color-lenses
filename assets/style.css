@@ -92,6 +92,9 @@ canvas, .page {
 #page-calibration svg {
   max-height: 90vh;
 }
+#calibration-samples {
+  visibility: hidden;
+}
 
 button, .button, .button-text {
   line-height: 20px;
