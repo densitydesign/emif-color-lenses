@@ -14,6 +14,11 @@ const update = (lang) => {
   for (const el of Array.from(document.querySelectorAll('[data-i18n-alt]'))) {
     el.alt = getString(lang, el.dataset['i18nAlt']);
   }
+
+  for (const el of Array.from(document.querySelectorAll('[data-i18n-src]'))) {
+    el.src = el.dataset['i18nSrc'] + lang + '.png';
+    el.onerror = () => el.src = el.dataset['i18nSrc'] + 'en.png';
+  }
 };
 
 module.exports = (select) => {
