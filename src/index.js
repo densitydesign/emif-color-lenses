@@ -107,6 +107,7 @@ buttons.start.onclick = async () => {
         audio: false,
         video: {
           facingMode: 'environment',
+          frameRate: { min: 24, ideal: 60 },
           width: { ideal: 4096 },
           height: { ideal: 2160 },
         }
