@@ -1,5 +1,5 @@
 const i18n = require("./i18n.js");
-i18n(document.getElementById('select-language'));
+const t = i18n(document.getElementById('select-language'));
 
 const glctx = require("gl-context");
 const glslify = require("glslify");
@@ -96,39 +96,47 @@ const render = () => {
 };
 
 buttons.start.onclick = async () => {
-  if (cleanupInput) {
-    cleanupInput();
-    cleanupInput = null;
-  }
-
-  const stream = await navigator.mediaDevices.getUserMedia({
-    audio: false,
-    video: {
-      facingMode: 'environment',
-      width: { ideal: 4096 },
-      height: { ideal: 2160 },
+  try {
+    if (cleanupInput) {
+      cleanupInput();
+      cleanupInput = null;
     }
-  });
 
-  const video = document.createElement('video');
-  const loaded = new Promise(res => { video.onplaying = res; });
-  video.srcObject = stream;
-  video.play();
-  await loaded;
+    const stream = await Promise.race([
+      navigator.mediaDevices.getUserMedia({
+        audio: false,
+        video: {
+          facingMode: 'environment',
+          width: { ideal: 4096 },
+          height: { ideal: 2160 },
+        }
+      }),
+      new Promise((_, rej) => setTimeout(rej, 10 * 1000)),
+    ]);
+    const video = document.createElement('video');
+    const loaded = new Promise(res => { video.onplaying = res; });
+    video.srcObject = stream;
+    video.play();
+    await loaded;
 
-  texture = gltex(gl, video);
-  texture.width = video.videoWidth;
-  texture.height = video.videoHeight;
+    texture = gltex(gl, video);
+    texture.width = video.videoWidth;
+    texture.height = video.videoHeight;
 
-  updateInput = () => texture.setPixels(video);
-  cleanupInput = () => {
-    video.pause();
-    stream.getTracks().forEach(t => t.stop());
-    updateInput = null;
-  };
+    updateInput = () => texture.setPixels(video);
+    cleanupInput = () => {
+      video.pause();
+      stream.getTracks().forEach(t => t.stop());
+      updateInput = null;
+    };
 
-  page = cameraCorrection ? 'live' : 'calibration';
-  update();
+    page = cameraCorrection ? 'live' : 'calibration';
+    update();
+  } catch (e) {
+    console.error("error or timeout in getUserMedia:", e);
+    window.alert(t("start-error"));
+    location.reload();
+  }
 };
 
 buttons.calibrate.onclick = () => {

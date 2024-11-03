@@ -14,6 +14,7 @@
     "start-intro": "To explore the poster, give access to your phone camera and calibrate it.",
     "start-button": "start",
     "start-cta": "Press start when you are ready.",
+    "start-error": "Unable to get camera access. The camera permission is required to use this app.",
     "calibration-intro": "Align the following scheme to the coloured version on the poster and press Calibrate.",
     "calibration-button": "calibrate",
     "credits-developed": "Developed by",

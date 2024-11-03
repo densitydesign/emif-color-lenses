@@ -43,4 +43,6 @@ module.exports = (select) => {
     localStorage.density_lens_lang = select.value;
   }
   update(select.value);
+
+  return (key) => getString(select.value, key);
 };
