@@ -125,5 +125,49 @@
     "credits-developed": "Arendanud:",
     "credits-designed": "Kujundanud:",
     "credits-back": "Tagasi"
+  },
+  "cz": {
+    "language-code": "cz",
+    "language-name": "čeština",
+
+    "label-c": "Digitální prostředí",
+    "label-m": "Motivace",
+    "label-y": "Vztahy",
+    "credits": "Autoři",
+    "calibration": "Kalibrace",
+    "slider": "Posunutím vylepšíte čitelnost",
+
+    "title": "Příběhy online obtěžování",
+    "start-intro": "Chcete-li si plakát prohlédnout, povolte přístup k fotoaparátu telefonu a zkalibrujte jej",
+    "start-button": "start",
+    "start-cta": "Až budete připraveni, stiskněte tlačítko Start.",
+    "start-error": "Unable to get camera access. The camera permission is required to use this app.",
+    "calibration-intro": "Zarovnejte následující schéma s barevnou verzí na plakátu a poté stiskněte Kalibrovat.",
+    "calibration-button": "Kalibrovat",
+    "credits-developed": "Vývoj:",
+    "credits-designed": "Návrh:",
+    "credits-back": "Zpět"
+  },
+  "pt": {
+    "language-code": "pt",
+    "language-name": "Português",
+
+    "label-c": "Espaços digitais",
+    "label-m": "Motivações",
+    "label-y": "Relações",
+    "credits": "Créditos",
+    "calibration": "Calibração",
+    "slider": "Desliza para melhorar a legibilidade",
+
+    "title": "Histórias de assédio online",
+    "start-intro": "Para explorar o cartaz, permite o acesso à câmara do telemóvel e calibra-a.",
+    "start-button": "Iniciar",
+    "start-cta": "Carrega em iniciar quando estiveres pronto/a.",
+    "start-error": "Unable to get camera access. The camera permission is required to use this app.",
+    "calibration-intro": "Alinha o diagrama seguinte com a versão colorida no cartaz e depois carrega em Calibrar.",
+    "calibration-button": "Calibrar",
+    "credits-developed": "Desenvolvida por",
+    "credits-designed": "Concebida em",
+    "credits-back": "Voltar"
   }
 }
