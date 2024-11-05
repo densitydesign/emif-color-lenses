@@ -169,5 +169,27 @@
     "credits-developed": "Desenvolvida por",
     "credits-designed": "Concebida em",
     "credits-back": "Voltar"
+  },
+  "es": {
+    "language-code": "es",
+    "language-name": "Español",
+
+    "label-c": "Espacios Digitales",
+    "label-m": "Motivaciones",
+    "label-y": "Relaciones",
+    "credits": "credits",
+    "calibration": "Calibrar",
+    "slider": "Deslizar para mejorar la legibilidad",
+
+    "title": "Historias de Acoso Online",
+    "start-intro": "Para explorar el póster, permite el acceso a la cámara de tu teléfono y calíbrala.",
+    "start-button": "Comenzar",
+    "start-cta": "Pulsa comenzar cuando estés listo.",
+    "start-error": "Unable to get camera access. The camera permission is required to use this app.",
+    "calibration-intro": "Alinea el siguiente diagrama con la versión en color en el póster y luego pulsa Calibrar.",
+    "calibration-button": "calibrate",
+    "credits-developed": "Desarrollado por",
+    "credits-designed": "Diseñado en",
+    "credits-back": "Volver"
   }
 }
