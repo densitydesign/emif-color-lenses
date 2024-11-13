@@ -187,7 +187,7 @@
     "start-cta": "Pulsa comenzar cuando estés listo.",
     "start-error": "Unable to get camera access. The camera permission is required to use this app.",
     "calibration-intro": "Alinea el siguiente diagrama con la versión en color en el póster y luego pulsa Calibrar.",
-    "calibration-button": "calibrate",
+    "calibration-button": "calibrar",
     "credits-developed": "Desarrollado por",
     "credits-designed": "Diseñado en",
     "credits-back": "Volver"
