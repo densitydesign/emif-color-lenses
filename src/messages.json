@@ -218,5 +218,27 @@
     "credits-developed": "Razvio",
     "credits-designed": "Dizajnirao",
     "credits-back": "Povratak"
+  },
+  "fr": {
+    "language-code": "fr",
+    "language-name": "French",
+
+    "label-c": "espaces numériques",
+    "label-m": "motivations",
+    "label-y": "relations",
+    "credits": "crédits",
+    "calibration": "calibrage",
+    "slider": "Glissez afin d’améliorer la lisibilité",
+
+    "title": "Récits de harcèlement en ligne",
+    "start-intro": "Pour explorer l’affiche, autorise l’accès à la caméra de ton téléphone et calibre.",
+    "start-button": "démarrer",
+    "start-cta": "Appuie sur démarrer lorsque tu es prêt.",
+    "start-error": "Unable to get camera access. The camera permission is required to use this app.",
+    "calibration-intro": "Aligne le diagramme suivant avec la version colorée sur le poster et appuie sur Calibrer.",
+    "calibration-button": "calibrer",
+    "credits-developed": "Développé par",
+    "credits-designed": "Conçu à",
+    "credits-back": "arrière"
   }
 }
