@@ -1,6 +1,8 @@
 # Stories of Online Harassment — Color Lenses
 
-Interactive WebGL viewer built for the “Stories of Online Harassment” poster in Tactical Tech’s **Supercharged by AI: Effects** exhibition. It lets visitors look at the print through cyan, magenta, and yellow “lenses” on their phone, revealing layered narratives about online harassment.
+Interactive WebGL viewer built for the “Stories of Online Harassment” poster in **Supercharged by AI: Effects** exhibition. It lets visitors look at the print through cyan, magenta, and yellow “lenses” on their phone, revealing layered narratives about online harassment.
+
+The project was developed within the _[Information Literacy for Societal Resilience](https://tacticaltech.org/news/project-launches/information-literacy-for-societal-resilience/)_ research initiative, a collaboration between [DensityDesign Lab](https://densitydesign.org/) (Politecnico di Milano), [Tactical Tech](https://tacticaltech.org/), and [IFLA](https://www.ifla.org/). The overall goal of the project is to explore how AI is affecting the ways media and information are produced, distributed, and perceived.
 
 ## How to experience the poster
 - Use a phone or tablet with a modern browser (Safari, Chrome, or Firefox) and allow camera access.
